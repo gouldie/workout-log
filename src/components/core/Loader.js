@@ -11,7 +11,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100vh',
-    margin: theme.spacing.unit * 5
+    margin: theme.spacing(5)
   }
 })
 
