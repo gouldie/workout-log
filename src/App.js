@@ -5,7 +5,6 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import Routes from './routes'
-// import Theme from './styles/muiTheme'
 import createStore from './store'
 
 const THEME = createMuiTheme({
