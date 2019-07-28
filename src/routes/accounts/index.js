@@ -15,7 +15,7 @@ const Screen = (props) => {
 }
 
 export default (props) => (
-  <div id="accounts-container" className="flex justify-center">
+  <div id="accounts" className="flex justify-center">
     <Screen {...props} />
   </div>
 )
