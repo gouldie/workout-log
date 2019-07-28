@@ -12,7 +12,7 @@ module.exports = env => {
   const { PLATFORM, VERSION } = env
   return merge([
     {
-      entry: ['@babel/polyfill', APP_DIR],
+      entry: ['core-js/stable', 'regenerator-runtime/runtime', APP_DIR],
       module: {
         rules: [
           {
