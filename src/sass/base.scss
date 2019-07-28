@@ -1,21 +1,20 @@
+$primary: #37b44e;
+
 html, body, #app {
   height: 100%;
 }
-
-#accounts {
-  height: 100%;
-  padding: 100px;
-}
-
-* { 
-  outline: none !important; 
-}
-
-$primary: #37b44e;
 
 body {
   background-color: #aab1b8b6;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   color: #000;
+}
+
+* { 
+  outline: none !important; 
+}
+
+h1 {
+  font-size: 22px;
 }
