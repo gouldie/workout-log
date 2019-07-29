@@ -1,0 +1,14 @@
+/* CSS applied to index.html before react dom is rendered */
+html, body, #app, .app-intro {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.app-intro {
+  background-color: #aab1b8b6;
+  display: flex;
+  justify-content: center;
+}
