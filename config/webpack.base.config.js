@@ -43,13 +43,18 @@ module.exports = env => {
           'process.env.PLATFORM': JSON.stringify(PLATFORM)
         }),
         new CopyWebpackPlugin([{ from: 'src/assets' }])
-      ]
-      // output: {
+      ],
+      output: {
+        path: path.join(__dirname, '..', 'dist'),
+        publicPath: '/'
       //   filename: '[name].bundle.js',
       //   chunkFilename: '[name].chunk.bundle.js',
       //   path: path.resolve(__dirname, '..', 'dist'),
       //   publicPath: '/',
-      // },
+      },
+      devServer: {
+        contentBase: './src/assets'
+      }
     }
   ])
 }
