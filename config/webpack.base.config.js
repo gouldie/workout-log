@@ -9,7 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const APP_DIR = path.resolve(__dirname, '../src')
 
 module.exports = env => {
-  const { PLATFORM, VERSION } = env
+  const { NODE_ENV } = env
   return merge([
     {
       entry: ['core-js/stable', 'regenerator-runtime/runtime', APP_DIR],
@@ -25,7 +25,7 @@ module.exports = env => {
           {
             test: /\.(scss|css)$/,
             use: [
-              PLATFORM === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+              NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
               'css-loader',
               'postcss-loader',
               'sass-loader'
@@ -39,8 +39,7 @@ module.exports = env => {
           filename: './index.html'
         }),
         new webpack.DefinePlugin({
-          'process.env.VERSION': JSON.stringify(VERSION),
-          'process.env.PLATFORM': JSON.stringify(PLATFORM)
+          'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
         }),
         new CopyWebpackPlugin([{ from: 'src/assets' }])
       ],
