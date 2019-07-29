@@ -40,4 +40,14 @@ module.exports = (app) => {
       })
     })
   })
+
+  app.post('/logout', (req, res) => {
+    if (req.user) {
+      req.session.destroy()
+      res.clearCookie('connect.sid') // clean up!
+      return res.json({ message: 'logging you out' })
+    } else {
+      return res.json({ message: 'no user to log out!' })
+    }
+  })
 }
