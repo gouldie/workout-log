@@ -1,2 +1,3 @@
 export { default as Loader } from './Loader'
-export { TextField } from './Inputs'
+export { TextField, ContainedButton } from './Inputs'
+export { Header } from './Text'

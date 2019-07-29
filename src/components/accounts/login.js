@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import { TextField } from '../core'
+import { TextField, Header, ContainedButton } from '../core'
 
 export default class Login extends Component {
   constructor () {
@@ -23,7 +23,7 @@ export default class Login extends Component {
 
     return (
       <div className="login">
-        <h1>Login</h1>
+        <Header label="Login" />
         <TextField
           label="Email"
           fullWidth
@@ -35,6 +35,11 @@ export default class Login extends Component {
           fullWidth
           value={password}
           onChange={(e) => this.onChange(e, 'password')}
+        />
+        <div></div>
+        <ContainedButton
+          label="Submit"
+          float='right'
         />
       </div>
     )
