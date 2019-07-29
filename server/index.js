@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const passport = require('passport')
+const helmet = require('helmet')
 
 const IN_PROD = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || '3000'
@@ -24,6 +25,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/', express.static(path.join(__dirname, '..', 'dist')))
 app.use('/dist', express.static(path.join(__dirname, '..', 'dist')))
+if (IN_PROD) {
+  app.use(helmet())
+}
 
 // Configure session & passport
 app.use(
