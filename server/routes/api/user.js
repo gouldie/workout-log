@@ -32,7 +32,11 @@ module.exports = (app) => {
 
       newUser.save((err, savedUser) => {
         if (err) return res.json(err)
-        return res.json(savedUser)
+
+        req.login(newUser, (err) => {
+          if (err) console.log('err', err)
+          return res.json(savedUser)
+        })
       })
     })
   })
