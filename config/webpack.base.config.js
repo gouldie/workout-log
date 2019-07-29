@@ -8,8 +8,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const APP_DIR = path.resolve(__dirname, '../src')
 
-module.exports = env => {
-  const { NODE_ENV } = env
+module.exports = () => {
+  const { NODE_ENV } = process.env
+
   return merge([
     {
       entry: ['core-js/stable', 'regenerator-runtime/runtime', APP_DIR],
