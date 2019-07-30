@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     verified: Boolean
   },
   password: String
-})
+}, { versionKey: false })
 
 UserSchema.pre('save', async function () {
   if (this.isModified('password')) {

@@ -1,10 +1,9 @@
 const User = require('../../models/User')
+const UserController = require('../../controllers/user')
 const passport = require('../../passport')
 
 module.exports = (app) => {
-  app.post('/login', passport.authenticate('local'), (req, res) => {
-    res.json({ success: true, user: req.user })
-  })
+  app.post('/login', passport.authenticate('local'), UserController.login)
 
   app.post('/signup', (req, res) => {
     const { email, password } = req.body
