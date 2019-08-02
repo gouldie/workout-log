@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const auth = require('../utils/auth')
 
-const { ensureSignedIn, ensureSignedOut } = auth
+const { ensureSignedIn, ensureSignedOut, signOut } = auth
 
 function login (req, res, next) {
   ensureSignedOut(req)
@@ -34,9 +34,7 @@ async function signup (req, res, next) {
 
 function logout (req, res) {
   ensureSignedIn(req)
-  req.session.destroy()
-  res.clearCookie('connect.sid') // clean up!
-  return res.json({ message: 'logging you out' })
+  signOut(req, res)
 }
 
 module.exports = {

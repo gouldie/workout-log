@@ -1,4 +1,3 @@
-// import { User } from './models'
 const User = require('../models/User')
 
 const signedIn = req => req.session.userId
@@ -37,14 +36,9 @@ const signOut = (req, res) => new Promise((resolve, reject) => {
   })
 })
 
-const isAuth = (req, user) => {
-  return req.session.userId === user.id
-}
-
 module.exports = {
   ensureSignedIn,
   ensureSignedOut,
   attemptSignIn,
-  signOut,
-  isAuth
+  signOut
 }
