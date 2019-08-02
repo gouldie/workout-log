@@ -10,6 +10,7 @@ const ensureSignedIn = req => {
 
 const ensureSignedOut = req => {
   if (signedIn(req)) {
+    console.log('signed in!')
     throw new Error('You are already signed in.')
   }
 }

@@ -1,15 +1,21 @@
 const User = require('../models/User')
-const auth = require('../utils/auth')
+const { ensureSignedIn, ensureSignedOut, signOut } = require('../utils/auth')
+const { validationResult } = require('express-validator')
+const { body } = require('express-validator')
 
-const { ensureSignedIn, ensureSignedOut, signOut } = auth
-
-function login (req, res, next) {
-  ensureSignedOut(req)
+function login (req, res) {
   return res.json({ success: true, user: req.user })
 }
 
 async function signup (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
   ensureSignedOut(req)
+
   const { email, password } = req.body
 
   const user = await User.findOne({ 'email.address': email })
@@ -37,8 +43,26 @@ function logout (req, res) {
   signOut(req, res)
 }
 
+function validate (method) {
+  switch (method) {
+    case 'login': {
+      return [
+        body('email', 'Email required').exists().isString().isEmail().isLength({ max: 50 }),
+        body('password', 'Password required').exists().isString().isLength({ max: 50 })
+      ]
+    }
+    case 'signup': {
+      return [
+        body('email', 'Email required').exists().isString().isEmail().isLength({ max: 50 }),
+        body('password', 'Password required').exists().isString().isLength({ max: 50 })
+      ]
+    }
+  }
+}
+
 module.exports = {
   login,
   signup,
-  logout
+  logout,
+  validate
 }
