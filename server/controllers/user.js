@@ -14,7 +14,7 @@ async function signup (req, res, next) {
 
   const user = await User.findOne({ 'email.address': email })
 
-  if (user) throw new Error(`Sorry, already a user with the email: ${email}`)
+  if (user) return next({ message: `Sorry, already a user with the email: ${email}` })
 
   const newUser = new User({
     email: {
@@ -27,7 +27,7 @@ async function signup (req, res, next) {
   await newUser.save()
 
   req.login(newUser, err => {
-    if (err) next(err)
+    if (err) return next(err)
     return res.json(newUser)
   })
 }

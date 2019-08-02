@@ -26,6 +26,7 @@ const attemptSignIn = async (username, password) => {
 
   return user
 }
+
 const signOut = (req, res) => new Promise((resolve, reject) => {
   req.session.destroy(err => {
     if (err) reject(err)
