@@ -1,10 +1,15 @@
 const User = require('../models/User')
+const auth = require('../utils/auth')
+
+const { ensureSignedIn, ensureSignedOut } = auth
 
 function login (req, res, next) {
+  ensureSignedOut()
   return res.json({ success: true, user: req.user })
 }
 
-function signup (req, res, next) {
+async function signup (req, res, next) {
+  ensureSignedOut()
   const { email, password } = req.body
 
   User.findOne({ 'email.address': email })
@@ -32,7 +37,15 @@ function signup (req, res, next) {
     .catch(err => next(err))
 }
 
+function logout (req, res) {
+  ensureSignedIn()
+  req.session.destroy()
+  res.clearCookie('connect.sid') // clean up!
+  return res.json({ message: 'logging you out' })
+}
+
 module.exports = {
   login,
-  signup
+  signup,
+  logout
 }
