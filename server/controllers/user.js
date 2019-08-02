@@ -4,41 +4,36 @@ const auth = require('../utils/auth')
 const { ensureSignedIn, ensureSignedOut } = auth
 
 function login (req, res, next) {
-  ensureSignedOut()
+  ensureSignedOut(req)
   return res.json({ success: true, user: req.user })
 }
 
 async function signup (req, res, next) {
-  ensureSignedOut()
+  ensureSignedOut(req)
   const { email, password } = req.body
 
-  User.findOne({ 'email.address': email })
-    .exec()
-    .then(user => {
-      if (user) return res.json({ error: `Sorry, already a user with the email: ${email}` })
+  const user = await User.findOne({ 'email.address': email })
 
-      const newUser = new User({
-        email: {
-          address: email,
-          verified: false
-        },
-        password
-      })
+  if (user) throw new Error(`Sorry, already a user with the email: ${email}`)
 
-      newUser.save()
-        .then(() => {
-          req.login(newUser, err => {
-            if (err) next(err)
-            return res.json(newUser)
-          })
-        })
-        .catch(err => next(err))
-    })
-    .catch(err => next(err))
+  const newUser = new User({
+    email: {
+      address: email,
+      verified: false
+    },
+    password
+  })
+
+  await newUser.save()
+
+  req.login(newUser, err => {
+    if (err) next(err)
+    return res.json(newUser)
+  })
 }
 
 function logout (req, res) {
-  ensureSignedIn()
+  ensureSignedIn(req)
   req.session.destroy()
   res.clearCookie('connect.sid') // clean up!
   return res.json({ message: 'logging you out' })

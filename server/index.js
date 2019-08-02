@@ -50,4 +50,9 @@ require('./routes')(app)
 
 app.set('port', port)
 
+app.use(function (err, req, res, next) {
+  if (!IN_PROD) console.log(err.message)
+  res.status(500).send(err.message)
+})
+
 app.listen(port, () => console.log(`Server Running on port ${port}`))
