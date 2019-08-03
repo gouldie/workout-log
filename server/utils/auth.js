@@ -1,6 +1,6 @@
 const User = require('../models/User')
 
-const signedIn = req => req.session.userId
+const signedIn = req => req.user
 
 const ensureSignedIn = req => {
   if (!signedIn(req)) {
@@ -32,7 +32,7 @@ const signOut = (req, res) => new Promise((resolve, reject) => {
     if (err) reject(err)
 
     res.clearCookie('connect.sid')
-
+    return res.json({ success: true })
     resolve(true)
   })
 })

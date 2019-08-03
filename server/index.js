@@ -51,6 +51,7 @@ require('./routes')(app)
 app.set('port', port)
 
 app.use(function (err, req, res, next) {
+  console.log('err', err)
   if (!IN_PROD) console.log(err.message)
   res.status(500).send(err.message)
 })

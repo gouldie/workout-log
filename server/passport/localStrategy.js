@@ -18,15 +18,16 @@ const strategy = new LocalStrategy(
     ensureSignedOut(req)
 
     User.findOne({ 'email.address': email }, (err, user) => {
+      console.log('east', user, err)
       if (err) {
         return done(err)
       }
 
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' })
+        return done({ message: 'Incorrect email' }, false)
       }
       if (!user.matchesPassword(password)) {
-        return done(null, false, { message: 'Incorrect password' })
+        return done({ message: 'Incorrect password' }, false)
       }
       return done(null, user)
     })

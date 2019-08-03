@@ -14,7 +14,7 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/login" />} />
         <Route exact path="/login" render={props => <Accounts {...props} /> } />
-        <PrivateRoute exact path='/counter' render={props => <Counter {...props} /> } />
+        <PrivateRoute exact path='/counter' Component={Counter} />
 
         {/* <Route component={NoMatchPage} /> */}
       </Switch>

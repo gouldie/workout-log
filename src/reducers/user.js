@@ -7,10 +7,10 @@ const initialState = {
 
 export default function (state = initialState, action = {}) {
   switch (action.type) {
-    case types.GET_USER: {
+    case types.IS_AUTHENTICATED: {
       return {
         ...state,
-        user: action.user
+        isAuthenticated: action.isAuthenticated
       }
     }
     default: {
