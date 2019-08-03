@@ -16,7 +16,7 @@ UserSchema.pre('save', async function () {
 })
 
 UserSchema.methods.matchesPassword = function (password) {
-  return bcryptjs.compare(password, this.password)
+  return bcryptjs.compareSync(password, this.password)
 }
 
 module.exports = mongoose.model('User', UserSchema)

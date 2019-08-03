@@ -48,12 +48,14 @@ export default class Login extends Component {
         <Header label="Login" />
         <TextField
           label="Email"
+          type='email'
           fullWidth
           value={email}
           onChange={(e) => this.onChange(e, 'email')}
         />
         <TextField
           label="Password"
+          type='password'
           fullWidth
           value={password}
           onChange={(e) => this.onChange(e, 'password')}
