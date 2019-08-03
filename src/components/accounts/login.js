@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { TextField, Header, ContainedButton } from '../core'
+import axios from 'axios'
 
 export default class Login extends Component {
   constructor () {
@@ -8,18 +9,39 @@ export default class Login extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      error: null,
+      submitting: false
     }
   }
 
   onChange = (e, type) => {
     this.setState({
+      error: null,
       [type]: e.target.value
     })
   }
 
-  render () {
+  submit = () => {
     const { email, password } = this.state
+
+    this.setState({ submitting: true })
+
+    axios.post('/api/login', { email, password })
+      .then(res => {
+        console.log('res', res)
+        this.setState({ submitting: false })
+        window.location.href = '/counter'
+      })
+      .catch(err => {
+        if (err) {
+          this.setState({ submitting: false, error: err.response.data })
+        }
+      })
+  }
+
+  render () {
+    const { email, password, error } = this.state
 
     return (
       <div className="login">
@@ -36,11 +58,14 @@ export default class Login extends Component {
           value={password}
           onChange={(e) => this.onChange(e, 'password')}
         />
-        <div></div>
-        <ContainedButton
-          label="Submit"
-          float='right'
-        />
+        <div className='flex justify-end'>
+          <ContainedButton
+            label="Submit"
+            onClick={this.submit}
+          />
+        </div>
+
+        <p style={{ color: 'red' }}>{error}</p>
       </div>
     )
   }
