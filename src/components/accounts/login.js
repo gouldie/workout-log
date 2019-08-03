@@ -22,14 +22,14 @@ export default class Login extends Component {
     })
   }
 
-  submit = () => {
+  submit = (e) => {
+    e.preventDefault()
     const { email, password } = this.state
 
     this.setState({ submitting: true })
 
     axios.post('/api/login', { email, password })
       .then(res => {
-        console.log('res', res)
         this.setState({ submitting: false })
         window.location.href = '/counter'
       })
@@ -41,10 +41,10 @@ export default class Login extends Component {
   }
 
   render () {
-    const { email, password, error } = this.state
+    const { email, password, error, submitting } = this.state
 
     return (
-      <div className="login">
+      <form className="login" onSubmit={this.submit}>
         <Header label="Login" />
         <TextField
           label="Email"
@@ -62,13 +62,14 @@ export default class Login extends Component {
         />
         <div className='flex justify-end'>
           <ContainedButton
-            label="Submit"
+            type='submit'
+            label={submitting ? 'Submitting' : 'Submit'}
             onClick={this.submit}
           />
         </div>
 
         <p style={{ color: 'red' }}>{error}</p>
-      </div>
+      </form>
     )
   }
 }

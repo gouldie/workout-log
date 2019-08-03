@@ -10,10 +10,11 @@ const Counter = lazy(() => import('./counter'))
 
 const Routes = () => {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader height />}>
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/login" />} />
         <Route exact path="/login" render={props => <Accounts {...props} /> } />
+        <Route exact path="/register" render={props => <Accounts {...props} /> } />
         <PrivateRoute exact path='/counter' Component={Counter} />
 
         {/* <Route component={NoMatchPage} /> */}

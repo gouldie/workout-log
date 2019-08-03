@@ -11,7 +11,7 @@ function login (req, res) {
   return res.json({ success: true, user: req.user })
 }
 
-async function signup (req, res, next) {
+async function register (req, res, next) {
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
@@ -55,7 +55,7 @@ function validate (method) {
         body('password', 'Password invalid').exists().isString().isLength({ max: 50 })
       ]
     }
-    case 'signup': {
+    case 'register': {
       return [
         body('email', 'Email invalid').exists().isString().isEmail().isLength({ max: 50 }),
         body('password', 'Password invalid').exists().isString().isLength({ max: 50 })
@@ -67,7 +67,7 @@ function validate (method) {
 module.exports = {
   getUser,
   login,
-  signup,
+  register,
   logout,
   validate
 }
