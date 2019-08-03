@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { TextField, Header, ContainedButton } from '../core'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default class Login extends Component {
   constructor () {
@@ -44,7 +45,7 @@ export default class Login extends Component {
     const { email, password, error, submitting } = this.state
 
     return (
-      <form className="login" onSubmit={this.submit}>
+      <form onSubmit={this.submit}>
         <Header label="Login" />
         <TextField
           label="Email"
@@ -69,6 +70,9 @@ export default class Login extends Component {
         </div>
 
         <p style={{ color: 'red' }}>{error}</p>
+        <Link style={{ display: 'inline-block', marginTop: '40px' }} to='/register'>
+          Don't have an account? Click here to register.
+        </Link>
       </form>
     )
   }
