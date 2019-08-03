@@ -4,7 +4,8 @@ const passport = require('../../passport')
 require('express-async-errors')
 
 module.exports = (app) => {
-  app.post('/login', UserController.validate('login'), passport.authenticate('local'), UserController.login)
-  app.post('/signup', UserController.validate('signup'), UserController.signup)
-  app.post('/logout', UserController.logout)
+  app.get('/api/user', UserController.getUser)
+  app.post('/api/login', UserController.validate('login'), passport.authenticate('local'), UserController.login)
+  app.post('/api/signup', UserController.validate('signup'), UserController.signup)
+  app.post('/api/logout', UserController.logout)
 }

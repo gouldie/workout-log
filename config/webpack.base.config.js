@@ -53,7 +53,10 @@ module.exports = () => {
       //   publicPath: '/',
       },
       devServer: {
-        contentBase: './src/assets'
+        contentBase: './src/assets',
+        proxy: { // proxy URLs to backend development server
+          '/api': 'http://localhost:3000'
+        }
       }
     }
   ])

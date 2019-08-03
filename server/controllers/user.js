@@ -3,6 +3,10 @@ const { ensureSignedIn, ensureSignedOut, signOut } = require('../utils/auth')
 const { validationResult } = require('express-validator')
 const { body } = require('express-validator')
 
+function getUser (req, res) {
+  return res.json({ user: req.user })
+}
+
 function login (req, res) {
   return res.json({ success: true, user: req.user })
 }
@@ -61,6 +65,7 @@ function validate (method) {
 }
 
 module.exports = {
+  getUser,
   login,
   signup,
   logout,
