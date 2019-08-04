@@ -6,6 +6,6 @@ const styles = {
   }
 }
 
-export const Header = ({ label }) => (
+export const Title = ({ label }) => (
   <h1 style={styles.header}>{label}</h1>
 )

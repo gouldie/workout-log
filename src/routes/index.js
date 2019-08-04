@@ -6,16 +6,14 @@ import { Loader, PrivateRoute } from '../components/core'
 
 // Routes
 const Accounts = lazy(() => import('./accounts'))
-const Counter = lazy(() => import('./counter'))
+const Routines = lazy(() => import('./routines'))
 
 const Routes = () => {
   return (
     <Suspense fallback={<Loader height />}>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/login" />} />
-        <Route exact path="/login" render={props => <Accounts {...props} /> } />
-        <Route exact path="/register" render={props => <Accounts {...props} /> } />
-        <PrivateRoute exact path='/counter' Component={Counter} />
+        <Route exact path="/" render={() => <Redirect to="/routines" />} />
+        <Route exact path='/routines' render={() => <Routines />} />
 
         {/* <Route component={NoMatchPage} /> */}
       </Switch>

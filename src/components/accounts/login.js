@@ -1,8 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import { TextField, Header, ContainedButton } from '../core'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import { Title, ContainedButton } from '../core'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
 
 export default class Login extends Component {
   constructor () {
@@ -32,7 +40,7 @@ export default class Login extends Component {
     axios.post('/api/login', { email, password })
       .then(res => {
         this.setState({ submitting: false })
-        window.location.href = '/counter'
+        window.location.href = '/routines'
       })
       .catch(err => {
         if (err) {
@@ -43,37 +51,40 @@ export default class Login extends Component {
 
   render () {
     const { email, password, error, submitting } = this.state
+    const { open, onClose } = this.props
 
     return (
-      <form onSubmit={this.submit}>
-        <Header label="Login" />
-        <TextField
-          label="Email"
-          type='email'
-          fullWidth
-          value={email}
-          onChange={(e) => this.onChange(e, 'email')}
-        />
-        <TextField
-          label="Password"
-          type='password'
-          fullWidth
-          value={password}
-          onChange={(e) => this.onChange(e, 'password')}
-        />
-        <div className='flex justify-end'>
-          <ContainedButton
-            type='submit'
-            label={submitting ? 'Submitting' : 'Submit'}
-            onClick={this.submit}
+      <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Log in</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Email"
+            type='email'
+            fullWidth
+            value={email}
+            margin="dense"
+            fullWidth
+            onChange={(e) => this.onChange(e, 'email')}
           />
-        </div>
-
-        <p style={{ color: 'red' }}>{error}</p>
-        <Link style={{ display: 'inline-block', marginTop: '40px' }} to='/register'>
-          Don't have an account? Click here to register.
-        </Link>
-      </form>
+          <TextField
+            label="Password"
+            type='password'
+            fullWidth
+            value={password}
+            margin="dense"
+            fullWidth
+            onChange={(e) => this.onChange(e, 'password')}
+          />
+        </DialogContent>
+        <DialogActions style={{ paddingRight: '24px' }} >
+          <Button onClick={onClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.submit} color="primary">
+            Log in
+          </Button>
+        </DialogActions>
+      </Dialog>
     )
   }
 }

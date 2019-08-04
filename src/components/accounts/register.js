@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import { TextField, Header, ContainedButton } from '../core'
+import { TextField, Title, ContainedButton } from '../core'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
@@ -32,7 +32,7 @@ export default class Register extends Component {
     axios.post('/api/register', { email, password })
       .then(res => {
         this.setState({ submitting: false })
-        window.location.href = '/counter'
+        window.location.href = '/routines'
       })
       .catch(err => {
         if (err) {
@@ -50,7 +50,7 @@ export default class Register extends Component {
 
     return (
       <form onSubmit={this.submit}>
-        <Header label="Register" />
+        <Title label="Register" />
         <TextField
           label="Email"
           type='email'

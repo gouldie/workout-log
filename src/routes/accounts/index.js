@@ -18,7 +18,7 @@ const Screen = (props) => {
 
 const Accounts = (props) => {
   if (props.isAuthenticated) {
-    return <Redirect to={{ pathname: '/counter', state: { from: props.location } }} />
+    return <Redirect to={{ pathname: '/routines', state: { from: props.location } }} />
   }
 
   return (
