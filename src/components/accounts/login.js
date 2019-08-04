@@ -51,11 +51,14 @@ export default class Login extends Component {
 
   render () {
     const { email, password, error, submitting } = this.state
-    const { open, onClose } = this.props
+    const { open, onClose, onRegister } = this.props
 
     return (
       <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Log in</DialogTitle>
+        <DialogTitle id="form-dialog-title" style={{ paddingBottom: 0 }}>Log in</DialogTitle>
+        <DialogContentText style={{ margin: 0, paddingLeft: '24px' }}>
+          {/* Or <a onClick={onRegister} style={{ cursor: 'pointer', color: 'steelblue' }}>create an account</a> */}
+        </DialogContentText>
         <DialogContent>
           <TextField
             label="Email"
@@ -76,7 +79,7 @@ export default class Login extends Component {
             onChange={(e) => this.onChange(e, 'password')}
           />
         </DialogContent>
-        <DialogActions style={{ paddingRight: '24px' }} >
+        <DialogActions style={{ padding: '16px 24px' }} >
           <Button onClick={onClose} color="primary">
             Cancel
           </Button>
@@ -84,6 +87,13 @@ export default class Login extends Component {
             Log in
           </Button>
         </DialogActions>
+        {
+          error &&
+          <DialogContentText style={{ padding: '0 24px', color: 'red' }}>
+            {error}
+          </DialogContentText>
+        }
+
       </Dialog>
     )
   }

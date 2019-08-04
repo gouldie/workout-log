@@ -33,9 +33,15 @@ export default function Header ({ title, isAuthenticated, logout, toggleModal })
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <Button color="inherit" onClick={() => isAuthenticated ? logout() : toggleModal('login')}>
-            {isAuthenticated ? 'Log out' : 'Log in'}
-          </Button>
+          {isAuthenticated && <Button color="inherit" onClick={logout}>
+            Log out
+          </Button>}
+          {!isAuthenticated && <Button color="inherit" onClick={() => toggleModal('login')} style={{ marginRight: '10px' }}>
+            Log in
+          </Button>}
+          {!isAuthenticated && <Button color="inherit" onClick={() => toggleModal('register')}>
+            Register
+          </Button>}
         </Toolbar>
       </AppBar>
     </div>
