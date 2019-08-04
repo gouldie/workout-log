@@ -18,7 +18,6 @@ const strategy = new LocalStrategy(
     ensureSignedOut(req)
 
     User.findOne({ 'email.address': email }, (err, user) => {
-      console.log('east', user, err)
       if (err) {
         return done(err)
       }
