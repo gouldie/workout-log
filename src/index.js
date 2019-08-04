@@ -21,8 +21,6 @@ const store = createStore()
 
 axios.get('/api/user')
   .then(res => {
-    console.log('res', res)
-
     if (res.data.user) {
       store.dispatch(IS_AUTHENTICATED(true))
     }
