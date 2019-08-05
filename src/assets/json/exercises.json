@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Barbell Curls",
+    "musclesWorked": ["Biceps"]
+  },
+  {
+    "name": "Bench Press",
+    "musclesWorked": ["Chest", "Triceps"]
+  }
+]
