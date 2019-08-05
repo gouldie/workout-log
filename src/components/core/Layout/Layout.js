@@ -46,6 +46,7 @@ class Layout extends Component {
         <SideMenu
           toggleDrawer={this.toggleDrawer}
           open={sideMenu}
+          isAuthenticated={isAuthenticated}
         />
         <Login
           open={modal === 'login'}
@@ -65,10 +66,6 @@ class Layout extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.user.isAuthenticated
-})
-
-const mapDispatchToProps = (state) => ({
-
 })
 
 export default connect(mapStateToProps)(Layout)

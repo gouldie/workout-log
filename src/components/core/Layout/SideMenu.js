@@ -10,6 +10,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
 import MailIcon from '@material-ui/icons/Mail'
+import Dumbbell from '../../../assets/images/dumbbell.png'
+import Exercises from '../../../assets/images/library-books.png'
+import Home from '../../../assets/images/home.png'
+import Settings from '../../../assets/images/account-settings.png'
 
 export default class SideMenu extends Component {
   constructor () {
@@ -24,7 +28,7 @@ export default class SideMenu extends Component {
   }
 
   render () {
-    const { open, toggleDrawer } = this.props
+    const { open, toggleDrawer, isAuthenticated } = this.props
 
     return (
       <div>
@@ -36,22 +40,28 @@ export default class SideMenu extends Component {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
+              <ListItem button key='home'>
+                <ListItemIcon><img src={Home} style={{ width: '24px' }} /></ListItemIcon>
+                <ListItemText primary='Home' />
+              </ListItem>
+              <ListItem button key='routines'>
+                <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
+                <ListItemText primary='Routines' />
+              </ListItem>
+              <ListItem button key='exercises'>
+                <ListItemIcon><img src={Exercises} style={{ width: '24px' }} /></ListItemIcon>
+                <ListItemText primary='Exercises' />
+              </ListItem>
             </List>
-            <Divider />
-            <List>
-              {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
-            </List>
+            {isAuthenticated && <Divider />}
+            {
+              isAuthenticated &&
+              <ListItem button key='settings'>
+                <ListItemIcon><img src={Settings} style={{ width: '24px' }} /></ListItemIcon>
+                <ListItemText primary='Settings' />
+              </ListItem>
+            }
+
           </div>
         </Drawer>
       </div>
