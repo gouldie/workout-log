@@ -5,15 +5,17 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { Loader, PrivateRoute } from '../components/core'
 
 // Routes
-const Accounts = lazy(() => import('./accounts'))
+const Home = lazy(() => import('./home'))
 const Routines = lazy(() => import('./routines'))
+const Exercises = lazy(() => import('./exercises'))
 
 const Routes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/routines" />} />
+        <Route exact path="/" render={() => <Home />} />
         <Route exact path='/routines' render={() => <Routines />} />
+        <Route exact path='/exercises' render={() => <Exercises />} />
 
         {/* <Route component={NoMatchPage} /> */}
       </Switch>

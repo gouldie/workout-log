@@ -8,12 +8,11 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
 import Dumbbell from '../../../assets/images/dumbbell.png'
 import Exercises from '../../../assets/images/library-books.png'
 import Home from '../../../assets/images/home.png'
 import Settings from '../../../assets/images/account-settings.png'
+import { Link } from 'react-router-dom'
 
 export default class SideMenu extends Component {
   constructor () {
@@ -40,18 +39,24 @@ export default class SideMenu extends Component {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              <ListItem button key='home'>
-                <ListItemIcon><img src={Home} style={{ width: '24px' }} /></ListItemIcon>
-                <ListItemText primary='Home' />
-              </ListItem>
-              <ListItem button key='routines'>
-                <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
-                <ListItemText primary='Routines' />
-              </ListItem>
-              <ListItem button key='exercises'>
-                <ListItemIcon><img src={Exercises} style={{ width: '24px' }} /></ListItemIcon>
-                <ListItemText primary='Exercises' />
-              </ListItem>
+              <Link className='undecorated' to='/'>
+                <ListItem button key='home'>
+                  <ListItemIcon><img src={Home} style={{ width: '24px' }} /></ListItemIcon>
+                  <ListItemText primary='Home' />
+                </ListItem>
+              </Link>
+              <Link className='undecorated' to='/routines'>
+                <ListItem button key='routines'>
+                  <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
+                  <ListItemText primary='Routines' />
+                </ListItem>
+              </Link>
+              <Link className='undecorated' to='/exercises'>
+                <ListItem button key='exercises'>
+                  <ListItemIcon><img src={Exercises} style={{ width: '24px' }} /></ListItemIcon>
+                  <ListItemText primary='Exercises' />
+                </ListItem>
+              </Link>
             </List>
             {isAuthenticated && <Divider />}
             {

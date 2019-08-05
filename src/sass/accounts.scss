@@ -6,3 +6,17 @@
   width: 100%;
   max-width: 300px;
 }
+
+#accounts-dialog .MuiPaper-root {
+  max-height: 100%;
+}
+
+.accounts-modal {
+  padding: 15px 25px;
+}
+
+@media (max-width: 600px) {
+  .accounts-modal {
+    padding: 10px 15px;
+  }
+}

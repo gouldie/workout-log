@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Header, SideMenu } from '../../core'
 import { connect } from 'react-redux'
 import { logout } from '../../../utils/auth'
-import { Login, Register } from '../../accounts'
+import { AccountsModal } from '../../accounts'
 
 class Layout extends Component {
   constructor () {
@@ -48,15 +48,15 @@ class Layout extends Component {
           open={sideMenu}
           isAuthenticated={isAuthenticated}
         />
-        <Login
+        <AccountsModal
+          type='login'
           open={modal === 'login'}
           onClose={() => this.toggleModal()}
-          onRegister={() => this.toggleModal('register')}
         />
-        <Register
+        <AccountsModal
+          type='register'
           open={modal === 'register'}
           onClose={() => this.toggleModal()}
-          onLogin={() => this.toggleModal('login')}
         />
         {children}
       </div>
