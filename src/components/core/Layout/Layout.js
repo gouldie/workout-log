@@ -3,6 +3,13 @@ import { Header, SideMenu } from '../../core'
 import { connect } from 'react-redux'
 import { logout } from '../../../utils/auth'
 import { AccountsModal } from '../../accounts'
+import { withRouter } from 'react-router'
+
+const titles = {
+  '/': 'Home',
+  '/routines': 'Routines',
+  '/exercises': 'Exercises'
+}
 
 class Layout extends Component {
   constructor () {
@@ -30,14 +37,14 @@ class Layout extends Component {
     const { modal, sideMenu } = this.state
     const {
       children,
-      title,
-      isAuthenticated
+      isAuthenticated,
+      location
     } = this.props
 
     return (
       <div>
         <Header
-          title={title}
+          title={titles[location.pathname]}
           isAuthenticated={isAuthenticated}
           logout={logout}
           toggleModal={this.toggleModal}
@@ -68,4 +75,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.user.isAuthenticated
 })
 
-export default connect(mapStateToProps)(Layout)
+export default withRouter(connect(mapStateToProps)(Layout))
