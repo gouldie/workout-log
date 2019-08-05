@@ -49,6 +49,11 @@ export default class AccountsModal extends Component {
     const { email, password } = this.state
     const { type } = this.props
 
+    if (!email || !password) {
+      this.setState({ error: 'Email and password is required' })
+      return
+    }
+
     this.setState({ submitting: true })
 
     axios.post(labels[type].submitRoute, { email, password })

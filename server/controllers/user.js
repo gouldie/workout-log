@@ -51,14 +51,14 @@ function validate (method) {
   switch (method) {
     case 'login': {
       return [
-        body('email', 'Email invalid').exists().isString().isEmail().isLength({ max: 50 }),
-        body('password', 'Password invalid').exists().isString().isLength({ max: 50 })
+        body('email', 'Please enter a valid email').exists().isString().isEmail().isLength({ max: 50 }),
+        body('password', 'Password must be between 6 and 50 characters').exists().isString().isLength({ min: 6, max: 50 })
       ]
     }
     case 'register': {
       return [
-        body('email', 'Email invalid').exists().isString().isEmail().isLength({ max: 50 }),
-        body('password', 'Password invalid').exists().isString().isLength({ max: 50 })
+        body('email', 'Please enter a valid email').exists().isString().isEmail().isLength({ max: 50 }),
+        body('password', 'Password must be between 6 and 50 characters').exists().isString().isLength({ min: 6, max: 50 })
       ]
     }
   }
