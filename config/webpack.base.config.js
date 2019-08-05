@@ -31,6 +31,10 @@ module.exports = () => {
               'postcss-loader',
               'sass-loader'
             ]
+          },
+          {
+            test: /\.svg$/,
+            use: 'svg-inline-loader'
           }
         ]
       },

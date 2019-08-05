@@ -12,7 +12,6 @@ const Routes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Switch>
-        {/* <Loader /> */}
         <Route exact path="/" render={() => <Redirect to="/routines" />} />
         <Route exact path='/routines' render={() => <Routines />} />
 

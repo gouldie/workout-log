@@ -2,7 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+// import CircularProgress from '@material-ui/core/CircularProgress'
+import Loader2 from '../../assets/images/loader.svg'
+import SVG from 'react-inlinesvg'
 
 const styles = theme => ({
   progress: {
@@ -17,7 +19,7 @@ const styles = theme => ({
 const Loader = ({ classes }) => {
   return (
     <div className={classes.progress}>
-      <CircularProgress />
+      <SVG src={Loader2} style={{ width: '100px', height: '100px' }} />
     </div>
   )
 }
