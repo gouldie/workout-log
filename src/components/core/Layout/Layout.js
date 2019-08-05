@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header } from '../../core'
+import { Header, SideMenu } from '../../core'
 import { connect } from 'react-redux'
 import { logout } from '../../../utils/auth'
 import { Login, Register } from '../../accounts'
@@ -9,7 +9,8 @@ class Layout extends Component {
     super()
 
     this.state = {
-      modal: null
+      modal: null,
+      sideMenu: false
     }
   }
 
@@ -17,8 +18,16 @@ class Layout extends Component {
     this.setState({ modal: this.state.modal === type ? null : type })
   }
 
+  toggleDrawer = (open) => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return
+    }
+
+    this.setState({ ...this.state, sideMenu: open })
+  }
+
   render () {
-    const { modal } = this.state
+    const { modal, sideMenu } = this.state
     const {
       children,
       title,
@@ -32,6 +41,11 @@ class Layout extends Component {
           isAuthenticated={isAuthenticated}
           logout={logout}
           toggleModal={this.toggleModal}
+          toggleDrawer={this.toggleDrawer}
+        />
+        <SideMenu
+          toggleDrawer={this.toggleDrawer}
+          open={sideMenu}
         />
         <Login
           open={modal === 'login'}
