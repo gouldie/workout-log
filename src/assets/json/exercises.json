@@ -1,10 +1,20 @@
 [
   {
-    "name": "Barbell Curls",
-    "musclesWorked": ["Biceps"]
+    "name": "Barbell Curl",
+    "muscles": ["Biceps"],
+    "equipment": ["Barbell / EZ-Bar"],
+    "img": "https://cdn-xi3mbccdkztvoept8hl.netdna-ssl.com/wp-content/uploads/watermarked/Barbell_Curle.png"
   },
   {
     "name": "Bench Press",
-    "musclesWorked": ["Chest", "Triceps"]
+    "muscles": ["Chest", "Triceps"],
+    "equipment": ["Barbell"],
+    "img": "https://cdn-xi3mbccdkztvoept8hl.netdna-ssl.com/wp-content/uploads/watermarked/Barbell_Bench_Press_M_WorkoutLabs.png"
+  },
+  {
+    "name": "Tricep Cable Pushdown",
+    "muscles": ["Triceps"],
+    "equipment": ["Cables"],
+    "img": "https://cdn-xi3mbccdkztvoept8hl.netdna-ssl.com/wp-content/uploads/watermarked/Triceps_Pushdown.png"
   }
 ]

@@ -1,0 +1,13 @@
+.exercise {
+  max-width: 500px;
+  border: 1px solid #403939;
+  height: 100px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 5px 6px 8px 5px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
+  }
+}
