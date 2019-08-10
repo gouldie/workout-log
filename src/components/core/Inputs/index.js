@@ -1,2 +1,2 @@
-export { default as TextField } from './Text'
+export { SearchBar } from './Text'
 export { ContainedButton } from './Buttons'
