@@ -13,7 +13,7 @@
 }
 
 // remove the underline from material-ui textfields
-.MuiInputBase-root {
+.search-bar .MuiInputBase-root {
   border-bottom: none !important;
   &:before {
     border-bottom: none !important;
