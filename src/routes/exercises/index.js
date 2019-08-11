@@ -6,6 +6,12 @@ import Container from '@material-ui/core/Container'
 import { SearchBar } from '../../components/core'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import Chip from '@material-ui/core/Chip'
 
 const filterList = {
   muscles: {
@@ -49,7 +55,7 @@ class Exercises extends Component {
     const exerciseContainer = document.querySelector('.exercise-container')
     const filterContainer = document.querySelector('.filter-container')
 
-    return !!((wrapper.offsetWidth - 48) < (exerciseContainer.offsetWidth + filterContainer.offsetWidth))
+    return !!((wrapper.offsetWidth - 88) < (exerciseContainer.offsetWidth + filterContainer.offsetWidth))
   }
 
   searchBarOnChange = (e) => {
@@ -61,6 +67,16 @@ class Exercises extends Component {
   }
 
   filterOnCheck = (type, option) => {
+    if (typeof option === 'object') {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          [type]: option
+        }
+      })
+      return
+    }
+
     const currentFilters = this.state.filters
 
     const index = currentFilters[type].indexOf(option)
@@ -98,7 +114,8 @@ class Exercises extends Component {
     })
 
     return (
-      <Container maxWidth='md' className={`flex justify-center wrap ${wrapped && 'wrapped'}`}>
+      <Container maxWidth='md' className={`flex wrap ${wrapped ? 'wrapped justify-center' : 'justify-center'}`}>
+        <div style={{ width: '20px' }}></div>
         <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
             <SearchBar
@@ -112,34 +129,60 @@ class Exercises extends Component {
               Object.keys(filterList).map((f, i) => {
                 return (
                   <div key={i} style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
-                    <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
                     {
-                      filterList[f].options.map((m, i) => {
-                        return (
-                          <div key={i}>
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  name={m}
-                                  value={m}
-                                  color='primary'
-                                  style={{ padding: '5px 9px' }}
-                                  onChange={() => this.filterOnCheck(f, m)}
-                                  checked={filters[f].includes(m)}
-                                />
-                              }
-                              label={m}
-                            />
-                          </div>
-                        )
-                      })
+                      true
+                        ? <div>
+                          <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
+                          <FormControl style={{ width: '200px' }}>
+                            <InputLabel htmlFor="select-multiple">Name</InputLabel>
+                            <Select
+                              multiple
+                              value={filters[f]}
+                              onChange={(e) => this.filterOnCheck(f, e.target.value)}
+                              input={<Input id="select-multiple" />}
+                              MenuProps={{ PaperProps: { style: { width: '250px' } } }}
+                            >
+                              {filterList[f].options.map((m, i) => (
+                                <MenuItem key={m} value={m}>
+                                  {m}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </div>
+                        : <div>
+                          <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
+                          {
+                            filterList[f].options.map((m, i) => {
+                              return (
+                                <div key={i}>
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name={m}
+                                        value={m}
+                                        color='primary'
+                                        style={{ padding: '5px 9px' }}
+                                        onChange={() => this.filterOnCheck(f, m)}
+                                        checked={filters[f].includes(m)}
+                                      />
+                                    }
+                                    label={m}
+                                  />
+                                </div>
+                              )
+                            })
+                          }
+                        </div>
                     }
+
                   </div>
                 )
               })
             }
           </div>
         </div>
+        <div style={{ width: '20px' }}></div>
         <div className='exercise-container flex column align-items-center' style={{ }}>
           {
             filteredExercises && filteredExercises.map((e, i) => (

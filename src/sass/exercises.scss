@@ -18,23 +18,12 @@
   }
 }
 
+.filter-container {
+  // padding-right: 30px;
+}
+
 .wrapped .exercise {
   width: 100%;
-}
-
-// remove the underline from material-ui textfields
-.search-bar .MuiInputBase-root {
-  border-bottom: none !important;
-  &:before {
-    border-bottom: none !important;
-  }
-  &:after {
-    border-bottom: none !important;
-  }
-}
-
-.filter-container {
-  padding-right: 20px;
 }
 
 .wrapped .filter-container {
