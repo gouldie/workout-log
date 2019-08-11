@@ -1,5 +1,10 @@
 .exercise-container {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
+}
+
+#select-filters {
+  display: none;
 }
 
 .exercise {
@@ -26,9 +31,32 @@
   width: 100%;
 }
 
-.wrapped .filter-container {
-  padding: 0;
-  margin-bottom: 20px;
-  flex-grow: 1;
-  max-width: 500px;
+@media (max-width: 800px) {
+  #exercises-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filter-container {
+    padding: 0;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .filter-list {
+    display: flex;
+    justify-content: space-between;
+    >div {
+      width: 43%;
+    }
+  }
+
+  #select-filters {
+    display: block;
+  }
+  #checkbox-filters {
+    display: none;
+  }
 }

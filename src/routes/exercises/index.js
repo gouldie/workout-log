@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Chip from '@material-ui/core/Chip'
+import ListItemText from '@material-ui/core/ListItemText'
 
 const filterList = {
   muscles: {
@@ -114,7 +115,7 @@ class Exercises extends Component {
     })
 
     return (
-      <Container maxWidth='md' className={`flex wrap ${wrapped ? 'wrapped justify-center' : 'justify-center'}`}>
+      <Container id='exercises-container' maxWidth='md' className='flex justify-center'>
         <div style={{ width: '20px' }}></div>
         <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
@@ -124,58 +125,55 @@ class Exercises extends Component {
               onClear={this.clearSearchBar}
             />
           </div>
-          <div>
+          <div className='filter-list'>
             {
               Object.keys(filterList).map((f, i) => {
                 return (
                   <div key={i} style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
-                    {
-                      true
-                        ? <div>
-                          <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
-                          <FormControl style={{ width: '200px' }}>
-                            <InputLabel htmlFor="select-multiple">Name</InputLabel>
-                            <Select
-                              multiple
-                              value={filters[f]}
-                              onChange={(e) => this.filterOnCheck(f, e.target.value)}
-                              input={<Input id="select-multiple" />}
-                              MenuProps={{ PaperProps: { style: { width: '250px' } } }}
-                            >
-                              {filterList[f].options.map((m, i) => (
-                                <MenuItem key={m} value={m}>
-                                  {m}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        </div>
-                        : <div>
-                          <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
-                          {
-                            filterList[f].options.map((m, i) => {
-                              return (
-                                <div key={i}>
-                                  <FormControlLabel
-                                    control={
-                                      <Checkbox
-                                        name={m}
-                                        value={m}
-                                        color='primary'
-                                        style={{ padding: '5px 9px' }}
-                                        onChange={() => this.filterOnCheck(f, m)}
-                                        checked={filters[f].includes(m)}
-                                      />
-                                    }
-                                    label={m}
+                    <div id='select-filters'>
+                      <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
+                      <FormControl style={{ width: '100%' }}>
+                        <InputLabel htmlFor="select-multiple">Name</InputLabel>
+                        <Select
+                          multiple
+                          value={filters[f]}
+                          onChange={(e) => this.filterOnCheck(f, e.target.value)}
+                          input={<Input id="select-multiple" />}
+                          MenuProps={{ PaperProps: { style: { width: '250px' } } }}
+                        >
+                          {filterList[f].options.map((m, i) => (
+                            <MenuItem key={m} value={m}>
+                              <Checkbox color='primary' checked={filters[f].indexOf(m) > -1} />
+                              <ListItemText primary={m} />
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div id='checkbox-filters'>
+                      <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
+                      {
+                        filterList[f].options.map((m, i) => {
+                          return (
+                            <div key={i}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    name={m}
+                                    value={m}
+                                    color='primary'
+                                    style={{ padding: '5px 9px' }}
+                                    onChange={() => this.filterOnCheck(f, m)}
+                                    checked={filters[f].includes(m)}
                                   />
-                                </div>
-                              )
-                            })
-                          }
-                        </div>
-                    }
-
+                                }
+                                label={m}
+                              />
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
                 )
               })
