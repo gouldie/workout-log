@@ -11,6 +11,10 @@ const filterList = {
   muscles: {
     label: 'Muscles worked',
     options: ['Biceps', 'Triceps', 'Chest']
+  },
+  equipment: {
+    label: 'Equipment required',
+    options: ['Barbell', 'EZ-Bar', 'Cables']
   }
 }
 
@@ -21,9 +25,31 @@ class Exercises extends Component {
     this.state = {
       search: '',
       filters: {
-        muscles: []
-      }
+        muscles: [],
+        equipment: []
+      },
+      wrapped: false
     }
+  }
+
+  componentDidMount () {
+    this.setState({
+      wrapped: this.hasWrapped()
+    })
+
+    window.addEventListener('resize', () => {
+      this.setState({
+        wrapped: this.hasWrapped()
+      })
+    })
+  }
+
+  hasWrapped = () => {
+    const wrapper = document.querySelector('.MuiContainer-root')
+    const exerciseContainer = document.querySelector('.exercise-container')
+    const filterContainer = document.querySelector('.filter-container')
+
+    return !!((wrapper.offsetWidth - 48) < (exerciseContainer.offsetWidth + filterContainer.offsetWidth))
   }
 
   searchBarOnChange = (e) => {
@@ -49,7 +75,7 @@ class Exercises extends Component {
   }
 
   render () {
-    const { search, filters } = this.state
+    const { search, filters, wrapped } = this.state
 
     const filteredExercises = exercises && exercises.filter(e => {
       const searchMatch = e.name.toLowerCase().includes(search.toLowerCase())
@@ -72,8 +98,8 @@ class Exercises extends Component {
     })
 
     return (
-      <Container maxWidth='md' style={{ display: 'flex' }}>
-        <div style={{ marginRight: '40px' }}>
+      <Container maxWidth='md' className={`flex justify-center wrap ${wrapped && 'wrapped'}`}>
+        <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
             <SearchBar
               value={search}
@@ -85,7 +111,7 @@ class Exercises extends Component {
             {
               Object.keys(filterList).map((f, i) => {
                 return (
-                  <div key={i} style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px' }}>
+                  <div key={i} style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
                     <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
                     {
                       filterList[f].options.map((m, i) => {
@@ -114,7 +140,7 @@ class Exercises extends Component {
             }
           </div>
         </div>
-        <div className='exercise-container flex column' style={{ width: '100%' }}>
+        <div className='exercise-container flex column align-items-center' style={{ }}>
           {
             filteredExercises && filteredExercises.map((e, i) => (
               <Exercise

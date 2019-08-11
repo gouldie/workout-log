@@ -2,7 +2,7 @@
   {
     "name": "Barbell Curl",
     "muscles": ["Biceps"],
-    "equipment": ["Barbell / EZ-Bar"],
+    "equipment": ["Barbell", "EZ-Bar"],
     "img": "https://cdn-xi3mbccdkztvoept8hl.netdna-ssl.com/wp-content/uploads/watermarked/Barbell_Curle.png"
   },
   {

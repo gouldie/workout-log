@@ -1,15 +1,25 @@
+.exercise-container {
+  width: 500px;
+}
+
 .exercise {
-  max-width: 500px;
+  // max-width: 500px;
+  width: 100%;
   border: 1px solid #403939;
-  height: 100px;
+  height: 120px;
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 5px;
+  box-sizing: border-box;
   cursor: pointer;
 
   &:hover {
     box-shadow: 5px 6px 8px 5px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
   }
+}
+
+.wrapped .exercise {
+  width: 100%;
 }
 
 // remove the underline from material-ui textfields
@@ -21,4 +31,15 @@
   &:after {
     border-bottom: none !important;
   }
+}
+
+.filter-container {
+  padding-right: 20px;
+}
+
+.wrapped .filter-container {
+  padding: 0;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  max-width: 500px;
 }
