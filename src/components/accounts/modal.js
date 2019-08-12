@@ -73,7 +73,7 @@ export default class AccountsModal extends Component {
     const { open, onClose, type } = this.props
 
     return (
-      <Dialog id='accounts-dialog' open={open} onClose={onClose} aria-labelledby="accounts-dialog-title" style={{ maxHeight: '100%' }}>
+      <Dialog id='accounts-dialog' open={open} onClose={() => onClose()} aria-labelledby="accounts-dialog-title" style={{ maxHeight: '100%' }}>
         <div className='accounts-modal'>
           <DialogTitle id="accounts-dialog-title" style={{ padding: 0, margin: '0 0 10px' }}>{labels[type].title}</DialogTitle>
           <DialogContent style={{ padding: 0, margin: '10px 0', minHeight: '100px' }}>
@@ -97,7 +97,7 @@ export default class AccountsModal extends Component {
             />
           </DialogContent>
           <DialogActions style={{ padding: 0, margin: '10px 0 0' }} >
-            <Button onClick={onClose} color="primary">
+            <Button onClick={() => onClose()} color="primary">
             Cancel
             </Button>
             <Button onClick={this.submit} color="primary">

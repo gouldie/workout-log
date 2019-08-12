@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { logout } from '../../../utils/auth'
 import { AccountsModal } from '../../accounts'
 import { withRouter } from 'react-router'
+import { displayModal } from '../../../actions/accounts'
 
 const titles = {
   '/': 'Home',
@@ -16,14 +17,13 @@ class Layout extends Component {
     super()
 
     this.state = {
-      modal: null,
       sideMenu: false
     }
   }
 
-  toggleModal = (type) => {
-    this.setState({ modal: this.state.modal === type ? null : type })
-  }
+  // toggleModal = (type) => {
+  //   this.setState({ modal: this.state.modal === type ? null : type })
+  // }
 
   toggleDrawer = (open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -34,11 +34,13 @@ class Layout extends Component {
   }
 
   render () {
-    const { modal, sideMenu } = this.state
+    const { sideMenu } = this.state
     const {
       children,
       isAuthenticated,
-      location
+      location,
+      modal,
+      displayModal
     } = this.props
 
     return (
@@ -47,7 +49,7 @@ class Layout extends Component {
           title={titles[location.pathname]}
           isAuthenticated={isAuthenticated}
           logout={logout}
-          toggleModal={this.toggleModal}
+          toggleModal={displayModal}
           toggleDrawer={this.toggleDrawer}
         />
         <SideMenu
@@ -58,12 +60,12 @@ class Layout extends Component {
         <AccountsModal
           type='login'
           open={modal === 'login'}
-          onClose={() => this.toggleModal()}
+          onClose={displayModal}
         />
         <AccountsModal
           type='register'
           open={modal === 'register'}
-          onClose={() => this.toggleModal()}
+          onClose={displayModal}
         />
         {children}
       </div>
@@ -72,7 +74,12 @@ class Layout extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.user.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated,
+  modal: state.accounts.modal
 })
 
-export default withRouter(connect(mapStateToProps)(Layout))
+const mapDispatchToProps = (dispatch) => ({
+  displayModal: (modal) => dispatch(displayModal(modal))
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout))

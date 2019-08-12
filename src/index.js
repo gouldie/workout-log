@@ -8,7 +8,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import Routes from './routes'
 import createStore from './store'
-import { IS_AUTHENTICATED } from './actions/user'
+import { isAuthenticated } from './actions/user'
 
 import './sass/index.scss'
 
@@ -22,7 +22,7 @@ const store = createStore()
 axios.get('/api/user')
   .then(res => {
     if (res.data.user) {
-      store.dispatch(IS_AUTHENTICATED(true))
+      store.dispatch(isAuthenticated(true))
     }
 
     ReactDOM.render(

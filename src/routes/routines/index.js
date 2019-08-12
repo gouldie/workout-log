@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 class Routines extends Component {
   constructor () {
@@ -21,12 +22,19 @@ class Routines extends Component {
   }
 
   render () {
+    const { isAuthenticated } = this.props
+
     return (
       <div>
-
+        {
+          !isAuthenticated &&
+          <p style={{ textAlign: 'center' }}>You need to be signed in to create a routine.</p>
+        }
       </div>
     )
   }
 }
 
-export default Routines
+export default connect(state => ({
+  isAuthenticated: state.user.isAuthenticated
+}))(Routines)

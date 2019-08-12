@@ -1,6 +1,6 @@
 import * as types from './types'
 
-export const IS_AUTHENTICATED = (isAuthenticated) => ({
+export const isAuthenticated = (isAuthenticated) => ({
   type: types.IS_AUTHENTICATED,
   isAuthenticated
 })
