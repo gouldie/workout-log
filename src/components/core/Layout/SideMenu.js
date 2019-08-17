@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Dumbbell from '../../../assets/images/dumbbell.png'
-import Exercises from '../../../assets/images/library-books.png'
+import LibraryBooks from '../../../assets/images/library-books.png'
 import Home from '../../../assets/images/home.png'
 import Settings from '../../../assets/images/account-settings.png'
 import { Link } from 'react-router-dom'
@@ -55,13 +55,13 @@ export default class SideMenu extends Component {
                 </ListItem>
               </Link>
               <ListItem button key='routines' onClick={this.handleClick}>
-                <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
+                <ListItemIcon><img src={LibraryBooks} style={{ width: '24px' }} /></ListItemIcon>
                 <ListItemText primary='Routines' />
                 {routinesExpand ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
               <Collapse in={routinesExpand} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <Link className='undecorated' to='/routines/create'>
+                  <Link className='undecorated' to='/routine/create'>
                     <ListItem button style={{ paddingLeft: '30px' }}>
                       <ListItemIcon>
                         <StarBorder />
@@ -81,7 +81,7 @@ export default class SideMenu extends Component {
               </Collapse>
               <Link className='undecorated' to='/exercises'>
                 <ListItem button key='exercises' onClick={toggleDrawer(false)}>
-                  <ListItemIcon><img src={Exercises} style={{ width: '24px' }} /></ListItemIcon>
+                  <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
                   <ListItemText primary='Exercises' />
                 </ListItem>
               </Link>

@@ -1,2 +1,2 @@
 export { SearchBar } from './Text'
-export { ContainedButton } from './Buttons'
+export { ContainedButton, SubmitButton } from './Buttons'

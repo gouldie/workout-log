@@ -6,3 +6,9 @@ export const ContainedButton = ({ type = 'text', label, color, float, onClick })
     {label}
   </Button>
 )
+
+export const SubmitButton = ({ submitting = false }) => (
+  <Button type='submit' varant='contained' style={{ backgroundColor: 'green', color: 'white', padding: '6px 15px' }}>
+    {submitting ? 'Submitting' : 'Submit'}
+  </Button>
+)

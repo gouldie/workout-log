@@ -1,12 +1,35 @@
 const Routine = require('../models/Routine')
 const { ensureSignedIn } = require('../utils/auth')
 
-function getRoutines (req, res) {
+async function getRoutines (req, res) {
   ensureSignedIn(req)
 
-  return Routine.find({ userId: req.user._id }).toArray()
+  const routines = await Routine.find({ userId: req.user._id })
+
+  return res.json({
+    success: true,
+    routines
+  })
+}
+
+async function addRoutine (req, res) {
+  // todo: validation
+
+  ensureSignedIn(req)
+
+  const days = {}
+  req.body.days.forEach(d => {
+    days[d] = []
+  })
+
+  await Routine.create({ userId: req.user._id, name: req.body.name, days })
+
+  return res.json({
+    success: true
+  })
 }
 
 module.exports = {
-  getRoutines
+  getRoutines,
+  addRoutine
 }
