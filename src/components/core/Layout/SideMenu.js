@@ -13,21 +13,30 @@ import Exercises from '../../../assets/images/library-books.png'
 import Home from '../../../assets/images/home.png'
 import Settings from '../../../assets/images/account-settings.png'
 import { Link } from 'react-router-dom'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
+import Collapse from '@material-ui/core/Collapse'
+import StarBorder from '@material-ui/icons/StarBorder'
 
 export default class SideMenu extends Component {
   constructor () {
     super()
 
     this.state = {
-      top: false,
-      left: false,
-      bottom: false,
-      right: false
+      routinesExpand: false
     }
+  }
+
+  handleClick = (e) => {
+    e.preventDefault()
+    this.setState({
+      routinesExpand: !this.state.routinesExpand
+    })
   }
 
   render () {
     const { open, toggleDrawer, isAuthenticated } = this.props
+    const { routinesExpand } = this.state
 
     return (
       <div>
@@ -35,24 +44,43 @@ export default class SideMenu extends Component {
           <div
             style={{ width: '250px' }}
             role="presentation"
-            onClick={toggleDrawer(false)}
+            // onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            <List>
+            <List style={{ zIndex: 2000 }}>
               <Link className='undecorated' to='/'>
-                <ListItem button key='home'>
+                <ListItem button key='home' onClick={toggleDrawer(false)}>
                   <ListItemIcon><img src={Home} style={{ width: '24px' }} /></ListItemIcon>
                   <ListItemText primary='Home' />
                 </ListItem>
               </Link>
-              <Link className='undecorated' to='/routines'>
-                <ListItem button key='routines'>
-                  <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
-                  <ListItemText primary='Routines' />
-                </ListItem>
-              </Link>
+              <ListItem button key='routines' onClick={this.handleClick}>
+                <ListItemIcon><img src={Dumbbell} style={{ width: '24px' }} /></ListItemIcon>
+                <ListItemText primary='Routines' />
+                {routinesExpand ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={routinesExpand} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <Link className='undecorated' to='/routines/create'>
+                    <ListItem button style={{ paddingLeft: '30px' }}>
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Create" onClick={toggleDrawer(false)} />
+                    </ListItem>
+                  </Link>
+                  <Link className='undecorated' to='/routines'>
+                    <ListItem button style={{ paddingLeft: '30px' }}>
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="List" onClick={toggleDrawer(false)} />
+                    </ListItem>
+                  </Link>
+                </List>
+              </Collapse>
               <Link className='undecorated' to='/exercises'>
-                <ListItem button key='exercises'>
+                <ListItem button key='exercises' onClick={toggleDrawer(false)}>
                   <ListItemIcon><img src={Exercises} style={{ width: '24px' }} /></ListItemIcon>
                   <ListItemText primary='Exercises' />
                 </ListItem>
