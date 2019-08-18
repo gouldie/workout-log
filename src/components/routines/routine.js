@@ -6,7 +6,7 @@ export default ({ data }) => {
     <Paper className='exercise flex justify-between align-items-center'>
       <div className='flex column justify-start' style={{ height: '100%' }}>
         <p style={{ marginBottom: '10px' }}>{data.name}</p>
-        {/* <p style={{ marginBottom: '10px' }}>{data.muscles && data.muscles.join(', ')}</p> */}
+        <p style={{ marginBottom: '10px' }}>{`${Object.keys(data.days).length} days/week`}</p>
         {/* <p>Equipment: {data.equipment && data.equipment.join(', ')}</p> */}
       </div>
       <div style={{ width: '140px' }}>

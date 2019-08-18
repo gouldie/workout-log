@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import Container from '@material-ui/core/Container'
 import Routine from '../../components/routines/routine'
 
 class Routines extends Component {
@@ -16,6 +17,7 @@ class Routines extends Component {
     axios.get('/api/routines')
       .then(res => {
         console.log('res', res)
+        this.setState({ routines: res.data.routines })
       })
       .catch(err => {
         console.log('err', err)
@@ -27,12 +29,11 @@ class Routines extends Component {
     const { routines } = this.state
 
     return (
-      <div>
+      <Container id='routines-container' maxWidth='md'>
         {
           !isAuthenticated
             ? <p style={{ textAlign: 'center' }}>You need to be signed in to create a routine.</p>
             : <div>
-              <p style={{ textAlign: 'center' }}>Create a routine.</p>
               <div>
                 {
                   routines && routines.map((r, i) => (
@@ -42,7 +43,7 @@ class Routines extends Component {
               </div>
             </div>
         }
-      </div>
+      </Container>
     )
   }
 }

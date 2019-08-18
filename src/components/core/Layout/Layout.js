@@ -9,6 +9,7 @@ import { displayModal } from '../../../actions/accounts'
 const titles = {
   '/': 'Home',
   '/routines': 'Routines',
+  '/routine/create': 'Routines',
   '/exercises': 'Exercises'
 }
 

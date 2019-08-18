@@ -33,7 +33,7 @@ class CreateRoutine extends Component {
       newDays.push(day)
     }
 
-    this.setState({ days: newDays })
+    this.setState({ days: newDays, error: null })
   }
 
   submit = (e) => {
