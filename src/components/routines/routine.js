@@ -6,10 +6,13 @@ export default ({ data }) => {
     <Paper className='exercise flex justify-between align-items-start'>
       <div className='flex column justify-between' style={{ height: '100%' }}>
         <div>
-          <strong>Name:</strong>
+          <strong>Name</strong>
           <p style={{ marginBottom: '10px' }}>{data.name}</p>
         </div>
-        <p style={{ marginBottom: '10px' }}>{data.desc}</p>
+        <div>
+          <strong>Description</strong>
+          <p>{data.desc}</p>
+        </div>
       </div>
       <p style={{ marginBottom: '10px' }}>{`${Object.keys(data.days).length} days/week`}</p>
     </Paper>
