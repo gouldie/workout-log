@@ -34,29 +34,8 @@ class Exercises extends Component {
       filters: {
         muscles: [],
         equipment: []
-      },
-      wrapped: false
+      }
     }
-  }
-
-  componentDidMount () {
-    this.setState({
-      wrapped: this.hasWrapped()
-    })
-
-    window.addEventListener('resize', () => {
-      this.setState({
-        wrapped: this.hasWrapped()
-      })
-    })
-  }
-
-  hasWrapped = () => {
-    const wrapper = document.querySelector('.MuiContainer-root')
-    const exerciseContainer = document.querySelector('.exercise-container')
-    const filterContainer = document.querySelector('.filter-container')
-
-    return !!((wrapper.offsetWidth - 88) < (exerciseContainer.offsetWidth + filterContainer.offsetWidth))
   }
 
   searchBarOnChange = (e) => {
@@ -92,7 +71,7 @@ class Exercises extends Component {
   }
 
   render () {
-    const { search, filters, wrapped } = this.state
+    const { search, filters } = this.state
 
     const filteredExercises = exercises && exercises.filter(e => {
       const searchMatch = e.name.toLowerCase().includes(search.toLowerCase())

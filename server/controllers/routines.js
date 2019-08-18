@@ -22,7 +22,7 @@ async function addRoutine (req, res) {
     days[d] = []
   })
 
-  await Routine.create({ userId: req.user._id, name: req.body.name, days })
+  await Routine.create({ userId: req.user._id, name: req.body.name, desc: req.body.desc, days })
 
   return res.json({
     success: true

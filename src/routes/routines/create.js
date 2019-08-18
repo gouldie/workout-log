@@ -14,13 +14,14 @@ class CreateRoutine extends Component {
 
     this.state = {
       name: '',
+      desc: '',
       days: [],
       error: null
     }
   }
 
-  handleChange = (e) => {
-    this.setState({ name: e.target.value, error: null })
+  handleChange = (type, e) => {
+    this.setState({ [type]: e.target.value, error: null })
   }
 
   toggleDay = (day) => {
@@ -39,10 +40,14 @@ class CreateRoutine extends Component {
   submit = (e) => {
     e.preventDefault()
 
-    const { name, days } = this.state
+    const { name, days, desc } = this.state
 
     if ((!name && name !== 0)) {
       this.setState({ error: 'Name is required' })
+      return
+    }
+    if ((!desc && desc !== 0)) {
+      this.setState({ error: 'Desc is required' })
       return
     }
     if (days.length <= 0) {
@@ -52,7 +57,7 @@ class CreateRoutine extends Component {
 
     this.setState({ submitting: true, error: null })
 
-    axios.post('/api/routine', { name, days })
+    axios.post('/api/routine', { name, desc, days })
       .then(res => {
         window.location.href = '/routines'
       })
@@ -62,15 +67,19 @@ class CreateRoutine extends Component {
   }
 
   render () {
-    const { name, days, error, submitting } = this.state
+    const { name, desc, days, error, submitting } = this.state
 
     return (
       <Container id='create-routine-container' maxWidth='md' className='flex column align-items-center'>
         <h1>Create a new routine</h1>
         <form onSubmit={this.submit} className='flex column align-items-center' style={{ marginTop: '30px' }}>
-          <FormControl style={{ width: '300px', maxWidth: '100%' }}>
-            <InputLabel htmlFor="component-simple">Routine name</InputLabel>
-            <Input id="component-simple" value={name} onChange={this.handleChange} />
+          <FormControl style={{ width: '100%' }}>
+            <InputLabel htmlFor="routine-name">Routine name</InputLabel>
+            <Input fullWidth id="routine-name" value={name} onChange={(e) => this.handleChange('name', e)} />
+          </FormControl>
+          <FormControl style={{ width: '100%', marginTop: '15px' }}>
+            <InputLabel htmlFor="routine-desc">Routine description</InputLabel>
+            <Input multiline fullWidth id="routine-desc" value={desc} onChange={(e) => this.handleChange('desc', e)} />
           </FormControl>
           <Grid item style={{ marginTop: '30px' }}>
             {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((d, i) => (
