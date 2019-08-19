@@ -41,7 +41,7 @@ a {
   }
 }
 
-// remove the underline from material-ui textfields
+// remove the underline from search bar material-ui textfields
 .search-bar .MuiInputBase-root {
   border-bottom: none !important;
   &:before {
@@ -50,4 +50,14 @@ a {
   &:after {
     border-bottom: none !important;
   }
+}
+
+strong {
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+button, h6 {
+  font-weight: 400 !important;
 }
