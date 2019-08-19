@@ -120,7 +120,7 @@ class Routines extends Component {
       <Container id='routines-container' maxWidth='md'>
         {
           !isAuthenticated
-            ? <p style={{ textAlign: 'center' }}>You need to be signed in to create a routine.</p>
+            ? <p style={{ textAlign: 'center' }}>You need to be signed in to view your routines.</p>
             : <div className='flex justify-center'>
               <div style={{ width: '20px' }}></div>
               <div className='filter-container'>

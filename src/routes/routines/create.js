@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { SubmitButton } from '../../components/core'
 import Container from '@material-ui/core/Container'
@@ -7,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 class CreateRoutine extends Component {
   constructor () {
@@ -68,36 +70,43 @@ class CreateRoutine extends Component {
 
   render () {
     const { name, desc, days, error, submitting } = this.state
+    const { isAuthenticated } = this.props
 
     return (
       <Container id='create-routine-container' maxWidth='md' className='flex column align-items-center'>
-        <h1>Create a new routine</h1>
-        <form onSubmit={this.submit} className='flex column align-items-center' style={{ marginTop: '30px' }}>
-          <FormControl style={{ width: '100%' }}>
-            <InputLabel htmlFor="routine-name">Routine name</InputLabel>
-            <Input fullWidth id="routine-name" value={name} onChange={(e) => this.handleChange('name', e)} />
-          </FormControl>
-          <FormControl style={{ width: '100%', marginTop: '15px' }}>
-            <InputLabel htmlFor="routine-desc">Routine description</InputLabel>
-            <Input multiline fullWidth id="routine-desc" value={desc} onChange={(e) => this.handleChange('desc', e)} />
-          </FormControl>
-          <Grid item style={{ marginTop: '30px' }}>
-            {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((d, i) => (
-              <Button key={i} variant='contained' color={days.includes(d) ? 'primary' : 'default'}
-                onClick={() => this.toggleDay(d)} style={{ margin: '0 5px' }}>
-                {d}
-              </Button>
-            ))
-            }
-          </Grid>
-          {error && <p style={{ textAlign: 'center', color: 'red', marginTop: '30px' }}>{error}</p>}
-          <div className='flex justify-end' style={{ marginTop: '30px', width: '100%' }}>
-            <SubmitButton submitting={submitting} />
-          </div>
-        </form>
+        {
+          !isAuthenticated
+            ? <p style={{ textAlign: 'center' }}>You need to be signed in to create a routine.</p>
+            : <div><h1>Create a new routine</h1>
+              <form onSubmit={this.submit} className='flex column align-items-center' style={{ marginTop: '30px' }}>
+                <FormControl style={{ width: '100%' }}>
+                  <InputLabel htmlFor="routine-name">Routine name</InputLabel>
+                  <Input fullWidth id="routine-name" value={name} onChange={(e) => this.handleChange('name', e)} />
+                </FormControl>
+                <FormControl style={{ width: '100%', marginTop: '15px' }}>
+                  <InputLabel htmlFor="routine-desc">Routine description</InputLabel>
+                  <Input multiline fullWidth id="routine-desc" value={desc} onChange={(e) => this.handleChange('desc', e)} />
+                </FormControl>
+                <Grid item style={{ marginTop: '30px' }}>
+                  {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((d, i) => (
+                    <Button key={i} variant='contained' color={days.includes(d) ? 'primary' : 'default'}
+                      onClick={() => this.toggleDay(d)} style={{ margin: '0 5px' }}>
+                      {d}
+                    </Button>
+                  ))
+                  }
+                </Grid>
+                {error && <p style={{ textAlign: 'center', color: 'red', marginTop: '30px' }}>{error}</p>}
+                <div className='flex justify-end' style={{ marginTop: '30px', width: '100%' }}>
+                  <SubmitButton submitting={submitting} />
+                </div>
+              </form></div>
+        }
       </Container>
     )
   }
 }
 
-export default CreateRoutine
+export default connect(state => ({
+  isAuthenticated: state.user.isAuthenticated
+}))(CreateRoutine)

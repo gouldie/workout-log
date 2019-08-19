@@ -31,6 +31,8 @@ class Layout extends Component {
       return
     }
 
+    console.log('open', open)
+
     this.setState({ ...this.state, sideMenu: open })
   }
 

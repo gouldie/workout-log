@@ -8,6 +8,7 @@ import { Loader, PrivateRoute, Layout } from '../components/core'
 const Home = lazy(() => import('./home'))
 const RoutineList = lazy(() => import('./routines/list'))
 const RoutineCreate = lazy(() => import('./routines/create'))
+const RoutineView = lazy(() => import('./routines/view'))
 const Exercises = lazy(() => import('./exercises'))
 
 const Routes = () => {
@@ -15,10 +16,11 @@ const Routes = () => {
     <Layout>
       <Suspense fallback={<Loader />}>
         <Switch>
-          <Route exact path="/" render={() => <Home />} />
-          <Route exact path='/routines' render={() => <RoutineList />} />
-          <Route exact path='/routine/create' render={() => <RoutineCreate />} />
-          <Route exact path='/exercises' render={() => <Exercises />} />
+          <Route exact path="/" component={Home} />
+          <Route exact path='/routines' component={RoutineList} />
+          <Route exact path='/routine/create' component={RoutineCreate} />
+          <Route exact path='/routine/:id' component={RoutineView} />
+          <Route exact path='/exercises' component={Exercises} />
 
           {/* <Route component={NoMatchPage} /> */}
         </Switch>
