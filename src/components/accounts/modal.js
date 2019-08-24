@@ -59,7 +59,7 @@ export default class AccountsModal extends Component {
     axios.post(labels[type].submitRoute, { email, password })
       .then(res => {
         this.setState({ submitting: false })
-        window.location.href = '/routines'
+        window.location.reload()
       })
       .catch(err => {
         if (err) {

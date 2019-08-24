@@ -12,6 +12,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import ListItemText from '@material-ui/core/ListItemText'
+import Popover from '@material-ui/core/Popover'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import Divider from '@material-ui/core/Divider'
+import axios from 'axios'
 
 const filterList = {
   muscles: {
@@ -33,8 +38,24 @@ class Exercises extends Component {
       filters: {
         muscles: [],
         equipment: []
-      }
+      },
+      popover: {
+        anchor: null,
+        exercise: null
+      },
+      routines: []
     }
+  }
+
+  componentDidMount () {
+    this.getRoutines()
+  }
+
+  getRoutines = () => {
+    axios.get('/api/routines')
+      .then(res => {
+        this.setState({ routines: res.data.routines })
+      })
   }
 
   searchBarOnChange = (e) => {
@@ -69,8 +90,30 @@ class Exercises extends Component {
     this.setState({ filters: currentFilters })
   }
 
+  iconOnClick = (e, icon, exercise, anchor) => {
+    e.stopPropagation()
+    if (icon === 'add') {
+      // show popover
+      this.setState({
+        popover: {
+          anchor,
+          exercise
+        }
+      })
+    }
+  }
+
+  closePopover = () => {
+    this.setState({
+      popover: {
+        anchor: null,
+        exercise: null
+      }
+    })
+  }
+
   render () {
-    const { search, filters } = this.state
+    const { search, filters, popover, routines } = this.state
 
     const filteredExercises = exercises && exercises.filter(e => {
       const searchMatch = e.name.toLowerCase().includes(search.toLowerCase())
@@ -93,7 +136,7 @@ class Exercises extends Component {
     })
 
     return (
-      <Container id='exercises-container' maxWidth='md' className='flex justify-center'>
+      <Container id='exercises-container' maxWidth='md' className='flex justify-center' onClick={this.closePopover}>
         <div style={{ width: '20px' }}></div>
         <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
@@ -160,11 +203,36 @@ class Exercises extends Component {
         </div>
         <div style={{ width: '20px' }}></div>
         <div className='exercise-container flex column align-items-center' style={{ }}>
+          <Popover
+            open={!!popover.anchor}
+            anchorEl={popover.anchor}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right'
+            }}
+          >
+            <div onClick={(e) => e.stopPropagation()} style={{ padding: '20px 20px 5px', minWidth: '150px', maxWidth: '300px' }}>
+              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Add to routine</p>
+              <List>
+                {
+                  routines.map((r, i) => (
+                    <div key={i}>
+                      <ListItem button style={{ padding: '5px 0' }}>
+                        <ListItemText style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }} primary={r.name} />
+                      </ListItem>
+                      {i < (routines.length - 1) && <Divider />}
+                    </div>
+                  ))
+                }
+              </List>
+            </div>
+          </Popover>
           {
             filteredExercises && filteredExercises.map((e, i) => (
               <Exercise
                 key={i}
                 data={{ ...e }}
+                onClick={this.iconOnClick}
               />
             ))
           }
