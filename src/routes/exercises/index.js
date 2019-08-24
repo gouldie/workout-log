@@ -12,13 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import ListItemText from '@material-ui/core/ListItemText'
-import Popover from '@material-ui/core/Popover'
-import Popper from '@material-ui/core/Popper'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import axios from 'axios'
-import Collapse from '@material-ui/core/Collapse'
+import AddToRoutine from '../../components/exercises/add'
 
 const filterList = {
   muscles: {
@@ -117,17 +112,10 @@ class Exercises extends Component {
 
   toggleExpand = (i) => {
     this.setState({ expand: this.state.expand === i ? null : i })
+  }
 
-    // const newExpand = this.state.expand
-    // const index = newExpand.indexOf(i)
-
-    // if (index >= 0) {
-    //   newExpand.splice(index, 1)
-    // } else {
-    //   newExpand.push(i)
-    // }
-
-    // this.setState({ expand: newExpand })
+  addToRoutine = (exercise, routineId, day) => {
+    console.log('adding', exercise.name, 'to', routineId, 'on', day)
   }
 
   render () {
@@ -221,50 +209,13 @@ class Exercises extends Component {
         </div>
         <div style={{ width: '20px' }}></div>
         <div className='exercise-container flex column align-items-center' style={{ }}>
-          <Popover
-            open={!!popover.anchor}
-            anchorEl={popover.anchor}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right'
-            }}
-          >
-            <div onClick={(e) => e.stopPropagation()} style={{ padding: '20px 20px 5px', minWidth: '150px', maxWidth: '300px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Add to routine</p>
-              <List style={{ padding: 0 }}>
-                {
-                  routines.map((r, i) => (
-                    <div key={i}>
-                      <ListItem button style={{ padding: '5px 0' }}>
-                        <ListItemText style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }} primary={r.name} onClick={() => this.toggleExpand(i)} />
-                      </ListItem>
-                      {
-                        <Collapse in={expand === i} timeout="auto" unmountOnExit>
-                          <Divider />
-                          <List style={{ padding: 0 }}>
-                            {
-                              Object.keys(r.days).length > 0
-                                ? <div>
-                                  {
-                                    Object.keys(r.days).map((d, i) => (
-                                      <ListItem key={i} button style={{ padding: '5px 0 5px 20px' }}>
-                                        <ListItemText primary={`Add to ${d}`} />
-                                      </ListItem>
-                                    ))
-                                  }
-                                </div>
-                                : <p>No days found</p>
-                            }
-                          </List>
-                        </Collapse>
-                      }
-                      {i < (routines.length - 1) && <Divider />}
-                    </div>
-                  ))
-                }
-              </List>
-            </div>
-          </Popover>
+          <AddToRoutine
+            routines={routines}
+            popover={popover}
+            expand={expand}
+            toggleExpand={this.toggleExpand}
+            addToRoutine={this.addToRoutine}
+          />
           {
             filteredExercises && filteredExercises.map((e, i) => (
               <Exercise
