@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 export default ({ popover, routines, expand, addToRoutine, toggleExpand }) => (
   <Popover
+    style={{ backgroundColor: 'rgb(0,0,0,0.5)' }}
     open={!!popover.anchor}
     anchorEl={popover.anchor}
     anchorOrigin={{
@@ -16,7 +17,7 @@ export default ({ popover, routines, expand, addToRoutine, toggleExpand }) => (
       horizontal: 'right'
     }}
   >
-    <div onClick={(e) => e.stopPropagation()} style={{ padding: '20px 0 5px', minWidth: '150px', maxWidth: '300px', border: '1px solid black' }}>
+    <div onClick={(e) => e.stopPropagation()} style={{ padding: '20px 0 5px', minWidth: '150px', maxWidth: '300px', border: '1px solid black', borderRadius: '4px' }}>
       <p style={{ fontWeight: 'bold', padding: '0 20px 8px' }}>Add to routine</p>
       <List style={{ padding: 0 }}>
         {
@@ -35,7 +36,7 @@ export default ({ popover, routines, expand, addToRoutine, toggleExpand }) => (
                           {
                             Object.keys(r.days).map((d, i) => (
                               <ListItem key={i} button style={{ padding: '5px 0 5px 30px' }}>
-                                <ListItemText primary={`Add to ${d}`} onClick={() => addToRoutine(popover.exercise, r._id, d)} />
+                                <ListItemText primary={`Add to ${d}`} onClick={() => addToRoutine(popover.exercise.name, r._id, d)} />
                               </ListItem>
                             ))
                           }

@@ -106,7 +106,8 @@ class Exercises extends Component {
       popover: {
         anchor: null,
         exercise: null
-      }
+      },
+      expand: null
     })
   }
 
@@ -115,7 +116,13 @@ class Exercises extends Component {
   }
 
   addToRoutine = (exercise, routineId, day) => {
-    console.log('adding', exercise.name, 'to', routineId, 'on', day)
+    axios.post('/api/routine/exercise', { exercise, routineId, day })
+      .then(res => {
+        this.closePopover()
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
   }
 
   render () {

@@ -29,7 +29,49 @@ async function addRoutine (req, res) {
   })
 }
 
+async function addExercise (req, res, next) {
+  // todo: validation
+
+  ensureSignedIn(req)
+
+  const { exercise, routineId, day, sets = 3, reps = 10 } = req.body
+
+  const routine = await Routine.findOne({ _id: routineId })
+
+  if (!routine) {
+    return next({ message: 'Routine not found' })
+  }
+
+  routine.days[day] = [
+    ...routine.days[day],
+    {
+      exercise,
+      sets,
+      reps
+    }
+  ]
+
+  const newRoutine = new Routine(routine)
+
+  console.log('inserting', newRoutine)
+
+  newRoutine.save(err => {
+    if (err) {
+      console.log('err', err)
+      next({ message: err })
+      return
+    }
+
+    console.log('saved')
+
+    return res.json({
+      success: true
+    })
+  })
+}
+
 module.exports = {
   getRoutines,
-  addRoutine
+  addRoutine,
+  addExercise
 }
