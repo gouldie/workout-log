@@ -195,9 +195,11 @@ class Exercises extends Component {
                         <Select
                           multiple
                           value={filters[f]}
+                          renderValue={selected => selected.join(', ')}
                           onChange={(e) => this.filterOnCheck(f, e.target.value)}
                           input={<Input id="select-multiple" />}
                           MenuProps={{ PaperProps: { style: { width: '250px' } } }}
+
                         >
                           {filterList[f].options.map((m, i) => (
                             <MenuItem key={m} value={m}>

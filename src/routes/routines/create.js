@@ -86,10 +86,10 @@ class CreateRoutine extends Component {
                   <InputLabel htmlFor="routine-desc">Routine description</InputLabel>
                   <Input multiline fullWidth id="routine-desc" value={desc} onChange={(e) => this.handleChange('desc', e)} />
                 </FormControl>
-                <Grid item style={{ marginTop: '30px' }}>
+                <Grid className='flex wrap justify-center' item style={{ marginTop: '30px' }}>
                   {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((d, i) => (
                     <Button key={i} variant='contained' color={days.includes(d) ? 'primary' : 'default'}
-                      onClick={() => this.toggleDay(d)} style={{ margin: '0 5px' }}>
+                      onClick={() => this.toggleDay(d)} style={{ margin: '5px' }}>
                       {d}
                     </Button>
                   ))

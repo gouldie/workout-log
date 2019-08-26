@@ -65,3 +65,27 @@ button, h6 {
 .MuiListItemText-root span {
   display: inline-block;
 }
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 18px;
+  }
+  h6 {
+    font-size: 16px !important;
+  }
+  p, span, label, .MuiSelect-selectMenu, input {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 450px) {
+  h1 {
+    font-size: 16px;
+  }
+  h6 {
+    font-size: 14px !important;
+  }
+  p, span, label, .MuiSelect-selectMenu, input {
+    font-size: 12px !important;
+  }
+}
