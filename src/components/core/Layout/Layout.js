@@ -22,16 +22,10 @@ class Layout extends Component {
     }
   }
 
-  // toggleModal = (type) => {
-  //   this.setState({ modal: this.state.modal === type ? null : type })
-  // }
-
   toggleDrawer = (open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
-
-    console.log('open', open)
 
     this.setState({ ...this.state, sideMenu: open })
   }

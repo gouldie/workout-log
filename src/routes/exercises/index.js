@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import exercises from '../../assets/json/exercises.json'
 import Exercise from '../../components/exercises/exercise'
 import Container from '@material-ui/core/Container'
-import { SearchBar } from '../../components/core'
+import { SearchBar, Snackbar } from '../../components/core'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Input from '@material-ui/core/Input'
@@ -41,7 +41,11 @@ class Exercises extends Component {
         exercise: null
       },
       routines: [],
-      expand: null
+      expand: null,
+      snackbar: {
+        open: false,
+        message: null
+      }
     }
   }
 
@@ -119,14 +123,34 @@ class Exercises extends Component {
     axios.post('/api/routine/exercise', { exercise, routineId, day })
       .then(res => {
         this.closePopover()
+        this.openSnackbar('Exercise added')
       })
       .catch(err => {
         console.log('err', err)
+        this.openSnackbar('An error occurred. Please try again, or contact us.')
       })
   }
 
+  openSnackbar = (message) => {
+    this.setState({
+      snackbar: {
+        open: true,
+        message
+      }
+    })
+  }
+
+  closeSnackbar = () => {
+    this.setState({
+      snackbar: {
+        open: false,
+        message: null
+      }
+    })
+  }
+
   render () {
-    const { search, filters, popover, routines, expand } = this.state
+    const { search, filters, popover, routines, expand, snackbar } = this.state
 
     const filteredExercises = exercises && exercises.filter(e => {
       const searchMatch = e.name.toLowerCase().includes(search.toLowerCase())
@@ -150,6 +174,7 @@ class Exercises extends Component {
 
     return (
       <Container id='exercises-container' maxWidth='md' className='flex justify-center' onClick={this.closePopover}>
+        <Snackbar open={snackbar.open} message={snackbar.message} onClose={this.closeSnackbar} />
         <div style={{ width: '20px' }}></div>
         <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
