@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { Switch, Route, Redirect } from 'react-router-dom'
-import { Loader, PrivateRoute, Layout } from '../components/core'
+import { Switch, Route } from 'react-router-dom'
+import { Loader, Layout } from '../components/core'
 
 // Routes
 const Home = lazy(() => import('./home'))

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import Popover from '@material-ui/core/Popover'
 import List from '@material-ui/core/List'

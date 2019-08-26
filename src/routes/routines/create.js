@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { SubmitButton } from '../../components/core'
 import Container from '@material-ui/core/Container'

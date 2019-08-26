@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import exercises from '../../assets/json/exercises.json'
 import Exercise from '../../components/exercises/exercise'
