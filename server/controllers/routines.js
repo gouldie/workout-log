@@ -1,5 +1,7 @@
 const Routine = require('../models/Routine')
 const { ensureSignedIn } = require('../utils/auth')
+const { body } = require('express-validator')
+const { validationResult } = require('express-validator')
 
 async function getRoutines (req, res) {
   ensureSignedIn(req)
@@ -12,8 +14,12 @@ async function getRoutines (req, res) {
   })
 }
 
-async function addRoutine (req, res) {
-  // todo: validation
+async function addRoutine (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
 
   ensureSignedIn(req)
 
@@ -30,7 +36,11 @@ async function addRoutine (req, res) {
 }
 
 async function addExercise (req, res, next) {
-  // todo: validation
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
 
   ensureSignedIn(req)
 
@@ -53,16 +63,11 @@ async function addExercise (req, res, next) {
 
   const newRoutine = new Routine(routine)
 
-  console.log('inserting', newRoutine)
-
   newRoutine.save(err => {
     if (err) {
-      console.log('err', err)
       next({ message: err })
       return
     }
-
-    console.log('saved')
 
     return res.json({
       success: true
@@ -70,7 +75,29 @@ async function addExercise (req, res, next) {
   })
 }
 
+function validate (method) {
+  switch (method) {
+    case 'addRoutine': {
+      return [
+        body('name', 'Name required').exists().isString().isLength({ max: 50 }),
+        body('desc', 'Desc invalid').optional().isString().isLength({ max: 500 }),
+        body('days', 'Days required').exists().isArray().isIn(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']).isLength({ max: 7 })
+      ]
+    }
+    case 'addExercise': {
+      return [
+        body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
+        body('exercise', 'Exercise required').exists().isString().isLength({ max: 50 }),
+        body('day', 'Day required').exists().isString().isIn(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']),
+        body('sets', 'Sets invalid').optional().isInt(),
+        body('reps', 'Reps invalid').optional().isInt()
+      ]
+    }
+  }
+}
+
 module.exports = {
+  validate,
   getRoutines,
   addRoutine,
   addExercise

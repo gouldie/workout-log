@@ -65,9 +65,9 @@ function validate (method) {
 }
 
 module.exports = {
+  validate,
   getUser,
   login,
   register,
-  logout,
-  validate
+  logout
 }
