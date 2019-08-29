@@ -36,10 +36,22 @@ class ViewRoutine extends Component {
   render () {
     const { routine } = this.state
 
+    console.log('r', routine)
+
     return (
-      <Container>
+      <Container className='flex column align-items-center'>
         {routine === null && <Loader />}
-        {routine === false && <h1 style={{ textAlign: 'center' }}>Routine not found</h1>}
+        {routine === false && <h1>Routine not found</h1>}
+        {
+          routine &&
+          <div style={{ width: '100%', maxWidth: '500px', textAlign: 'left' }}>
+            <h2>Name</h2>
+            <p>{routine.name}</p>
+            <h2>Description</h2>
+            <p>{routine.description || 'No description'}</p>
+          </div>
+        }
+
       </Container>
     )
   }

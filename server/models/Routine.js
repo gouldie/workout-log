@@ -8,7 +8,7 @@ const RoutineSchema = new mongoose.Schema({
 }, { versionKey: false })
 
 RoutineSchema.statics.findByStringId = function (id) {
-  return this.find({ _id: mongoose.Types.ObjectId(id) })
+  return this.findById({ _id: mongoose.Types.ObjectId(id) })
 }
 
 module.exports = mongoose.model('Routine', RoutineSchema)

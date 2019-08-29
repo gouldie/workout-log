@@ -7,10 +7,11 @@ import { withRouter } from 'react-router'
 import { displayModal } from '../../../actions/accounts'
 
 const titles = {
-  '/': 'Home',
-  '/routines': 'Routines',
   '/routine/create': 'Routines',
-  '/exercises': 'Exercises'
+  '/routine/': 'Routine',
+  '/routines': 'Routines',
+  '/exercises': 'Exercises',
+  '/': 'Home'
 }
 
 class Layout extends Component {
@@ -43,7 +44,7 @@ class Layout extends Component {
     return (
       <div>
         <Header
-          title={titles[location.pathname]}
+          title={titles[Object.keys(titles).find(t => location.pathname.includes(t))]}
           isAuthenticated={isAuthenticated}
           logout={logout}
           toggleModal={displayModal}
