@@ -13,6 +13,7 @@ import Select from '@material-ui/core/Select'
 import ListItemText from '@material-ui/core/ListItemText'
 import axios from 'axios'
 import AddToRoutine from '../../components/exercises/add'
+import { connect } from 'react-redux'
 
 const filterList = {
   muscles: {
@@ -150,6 +151,7 @@ class Exercises extends Component {
 
   render () {
     const { search, filters, popover, routines, expand, snackbar } = this.state
+    const { isAuthenticated } = this.props
 
     const filteredExercises = exercises && exercises.filter(e => {
       const searchMatch = e.name.toLowerCase().includes(search.toLowerCase())
@@ -255,6 +257,7 @@ class Exercises extends Component {
                 key={i}
                 data={{ ...e }}
                 onClick={this.iconOnClick}
+                isAuthenticated={isAuthenticated}
               />
             ))
           }
@@ -265,4 +268,6 @@ class Exercises extends Component {
   }
 }
 
-export default Exercises
+export default connect(state => ({
+  isAuthenticated: state.user.isAuthenticated
+}))(Exercises)

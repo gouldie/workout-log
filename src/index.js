@@ -20,9 +20,7 @@ const store = createStore()
 
 axios.get('/api/user')
   .then(res => {
-    if (res.data.user) {
-      store.dispatch(isAuthenticated(true))
-    }
+    store.dispatch(isAuthenticated(!!res.data.user))
 
     ReactDOM.render(
       <MuiThemeProvider theme={theme}>
