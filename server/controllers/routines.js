@@ -1,6 +1,6 @@
 const Routine = require('../models/Routine')
 const { ensureSignedIn } = require('../utils/auth')
-const { body } = require('express-validator')
+const { body, query } = require('express-validator')
 const { validationResult } = require('express-validator')
 
 async function getRoutines (req, res) {
@@ -11,6 +11,23 @@ async function getRoutines (req, res) {
   return res.json({
     success: true,
     routines
+  })
+}
+
+async function getRoutine (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
+  ensureSignedIn(req)
+
+  const { routineId } = req.query
+
+  return res.json({
+    success: true,
+    routine: await Routine.findByStringId(routineId)
   })
 }
 
@@ -77,6 +94,11 @@ async function addExercise (req, res, next) {
 
 function validate (method) {
   switch (method) {
+    case 'getRoutine': {
+      return [
+        query('routineId', 'Invalid Routine ID').exists().isString().isLength({ max: 50 })
+      ]
+    }
     case 'addRoutine': {
       return [
         body('name', 'Name required').exists().isString().isLength({ max: 50 }),
@@ -98,6 +120,7 @@ function validate (method) {
 
 module.exports = {
   validate,
+  getRoutine,
   getRoutines,
   addRoutine,
   addExercise
