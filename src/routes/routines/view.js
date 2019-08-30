@@ -9,6 +9,16 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
+const days = {
+  MON: 'Monday',
+  TUE: 'Tuesday',
+  WED: 'Wednesday',
+  THU: 'Thursday',
+  FRI: 'Friday',
+  SAT: 'Saturday',
+  SUN: 'Sunday'
+}
+
 class ViewRoutine extends Component {
   constructor () {
     super()
@@ -51,19 +61,19 @@ class ViewRoutine extends Component {
           <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left' }}>
             <h2>{routine.name}</h2>
             <p>{routine.description || 'No description'}</p>
-            <div style={{ marginTop: '50px' }}>
+            <div style={{ margin: '50px 0' }}>
               {
                 Object.keys(routine.days).map((day, i) => {
                   return (
                     <div key={i}>
-                      <h2>{day}</h2>
+                      <h2>{days[day]}</h2>
                       <Paper>
                         <Table style={{ marginBottom: '16px' }}>
                           <TableHead>
                             <TableRow>
-                              <TableCell>Exercise</TableCell>
-                              <TableCell>Sets</TableCell>
-                              <TableCell>Reps</TableCell>
+                              <TableCell width='75%'>Exercise</TableCell>
+                              <TableCell width='15%'>Sets</TableCell>
+                              <TableCell width='15%'>Reps</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
