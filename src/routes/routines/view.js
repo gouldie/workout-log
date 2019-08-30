@@ -8,6 +8,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
 
 const days = {
   MON: 'Monday',
@@ -24,7 +25,8 @@ class ViewRoutine extends Component {
     super()
 
     this.state = {
-      routine: null // if invalid, this is set to false
+      routine: null, // if invalid, this is set to false
+      editing: false
     }
   }
 
@@ -49,8 +51,12 @@ class ViewRoutine extends Component {
       })
   }
 
+  edit = () = {
+    
+  }
+
   render () {
-    const { routine } = this.state
+    const { routine, editing } = this.state
 
     return (
       <Container className='flex column align-items-center'>
@@ -61,7 +67,7 @@ class ViewRoutine extends Component {
           <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left' }}>
             <h2>{routine.name}</h2>
             <p>{routine.description || 'No description'}</p>
-            <div style={{ margin: '50px 0' }}>
+            <div style={{ margin: '40px 0' }}>
               {
                 Object.keys(routine.days).map((day, i) => {
                   return (
@@ -71,7 +77,7 @@ class ViewRoutine extends Component {
                         <Table style={{ marginBottom: '16px' }}>
                           <TableHead>
                             <TableRow>
-                              <TableCell width='75%'>Exercise</TableCell>
+                              <TableCell width='70%'>Exercise</TableCell>
                               <TableCell width='15%'>Sets</TableCell>
                               <TableCell width='15%'>Reps</TableCell>
                             </TableRow>
@@ -95,6 +101,16 @@ class ViewRoutine extends Component {
                   )
                 })
               }
+            </div>
+            <div className='flex justify-between' style={{ marginBottom: '50px' }}>
+              <p>{editing && 'Add new day +'}</p>
+              <Button
+                variant='contained'
+                color={editing ? 'secondary' : 'primary'}
+                style={{ color: '#fff' }}
+                onClick={() => console.log('ad')}>
+                {editing ? 'Save' : 'Edit'}
+              </Button>
             </div>
           </div>
         }

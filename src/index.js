@@ -10,8 +10,12 @@ import createStore from './store'
 import { isAuthenticated } from './actions/user'
 
 import './sass/index.scss'
+import { green } from '@material-ui/core/colors'
 
 const theme = createMuiTheme({
+  palette: {
+    secondary: green
+  },
   typography: {
     useNextVariants: true
   }
