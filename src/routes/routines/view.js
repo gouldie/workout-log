@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import Container from '@material-ui/core/Container'
 import axios from 'axios'
 import { Loader } from '../../components/core'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
 
 class ViewRoutine extends Component {
   constructor () {
@@ -36,19 +42,50 @@ class ViewRoutine extends Component {
   render () {
     const { routine } = this.state
 
-    console.log('r', routine)
-
     return (
       <Container className='flex column align-items-center'>
         {routine === null && <Loader />}
         {routine === false && <h1>Routine not found</h1>}
         {
           routine &&
-          <div style={{ width: '100%', maxWidth: '500px', textAlign: 'left' }}>
-            <h2>Name</h2>
-            <p>{routine.name}</p>
-            <h2>Description</h2>
+          <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left' }}>
+            <h2>{routine.name}</h2>
             <p>{routine.description || 'No description'}</p>
+            <div style={{ marginTop: '50px' }}>
+              {
+                Object.keys(routine.days).map((day, i) => {
+                  return (
+                    <div key={i}>
+                      <h2>{day}</h2>
+                      <Paper>
+                        <Table style={{ marginBottom: '16px' }}>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Exercise</TableCell>
+                              <TableCell>Sets</TableCell>
+                              <TableCell>Reps</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {
+                              routine.days[day].map((e, i) => {
+                                return (
+                                  <TableRow key={i}>
+                                    <TableCell>{e.exercise}</TableCell>
+                                    <TableCell>{e.sets}</TableCell>
+                                    <TableCell>{e.reps}</TableCell>
+                                  </TableRow>
+                                )
+                              })
+                            }
+                          </TableBody>
+                        </Table>
+                      </Paper>
+                    </div>
+                  )
+                })
+              }
+            </div>
           </div>
         }
 
