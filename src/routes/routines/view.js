@@ -9,6 +9,10 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import EditIcon from '@material-ui/icons/Edit'
+import SaveIcon from '@material-ui/icons/Save'
+import CloseIcon from '@material-ui/icons/Close'
 
 const days = {
   MON: 'Monday',
@@ -26,7 +30,10 @@ class ViewRoutine extends Component {
 
     this.state = {
       routine: null, // if invalid, this is set to false
-      editing: false
+      editing: {
+        type: null,
+        value: null
+      }
     }
   }
 
@@ -51,12 +58,51 @@ class ViewRoutine extends Component {
       })
   }
 
-  edit = () = {
-    
+  editName = () => {
+    this.setState({
+      editing: {
+        type: 'name',
+        value: this.state.routine.name
+      }
+    })
+  }
+
+  onChangeName = (e) => {
+    this.setState({
+      editing: {
+        type: 'name',
+        value: e.target.value
+      }
+    })
+  }
+
+  saveName = () => {
+    axios.post('/api/routine/name', { routineId: this.props.match.params.id, name: this.state.editing.value })
+      .then(res => {
+        this.setState({
+          editing: {
+            type: null,
+            value: null
+          },
+          routine: res.data.routine
+        })
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
+  }
+
+  cancel = () => {
+    this.setState({
+      editing: {
+        type: null,
+        value: null
+      }
+    })
   }
 
   render () {
-    const { routine, editing } = this.state
+    const { routine, editing: { type, value } } = this.state
 
     return (
       <Container className='flex column align-items-center'>
@@ -65,7 +111,39 @@ class ViewRoutine extends Component {
         {
           routine &&
           <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left' }}>
-            <h2>{routine.name}</h2>
+            <div className='flex align-items-center' style={{ marginBottom: '20px' }}>
+              {
+                type === 'name'
+                  ? <div className='flex align-items-center' style={{ height: '32px' }}>
+                    <TextField
+                      value={value}
+                      onChange={this.onChangeName}
+                      InputProps={{
+                        style: { fontSize: '20px' }
+                      }}
+                    />
+                    <SaveIcon
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      onClick={this.saveName}
+                    />
+                    <CloseIcon
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
+                      onClick={this.cancel}
+                    />
+                  </div>
+
+                  : <div className='flex align-items-center' style={{ height: '32px' }}>
+                    <h2 style={{ margin: 0 }}>{routine.name}</h2>
+                    <EditIcon
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      onClick={this.editName}
+                    />
+                  </div>
+
+              }
+
+            </div>
+
             <p>{routine.description || 'No description'}</p>
             <div style={{ margin: '40px 0' }}>
               {
@@ -102,7 +180,7 @@ class ViewRoutine extends Component {
                 })
               }
             </div>
-            <div className='flex justify-between' style={{ marginBottom: '50px' }}>
+            {/* <div className='flex justify-between' style={{ marginBottom: '50px' }}>
               <p>{editing && 'Add new day +'}</p>
               <Button
                 variant='contained'
@@ -111,7 +189,7 @@ class ViewRoutine extends Component {
                 onClick={() => console.log('ad')}>
                 {editing ? 'Save' : 'Edit'}
               </Button>
-            </div>
+            </div> */}
           </div>
         }
 

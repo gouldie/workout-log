@@ -92,6 +92,25 @@ async function addExercise (req, res, next) {
   })
 }
 
+async function editName (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
+  ensureSignedIn(req)
+
+  const { routineId, name } = req.body
+
+  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { name }, { new: true })
+
+  return res.json({
+    success: true,
+    routine: newRoutine
+  })
+}
+
 function validate (method) {
   switch (method) {
     case 'getRoutine': {
@@ -115,6 +134,12 @@ function validate (method) {
         body('reps', 'Reps invalid').optional().isInt()
       ]
     }
+    case 'editName': {
+      return [
+        body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
+        body('name', 'Name required').exists().isString().isLength({ max: 50 })
+      ]
+    }
   }
 }
 
@@ -123,5 +148,6 @@ module.exports = {
   getRoutine,
   getRoutines,
   addRoutine,
-  addExercise
+  addExercise,
+  editName
 }
