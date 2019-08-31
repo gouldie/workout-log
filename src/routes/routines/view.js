@@ -150,16 +150,47 @@ class ViewRoutine extends Component {
     })
   }
 
+  setsOnChange = (e, i) => {
+    if (e.target.value > 1000) return
+    const currentValue = this.state.editing.value
+
+    currentValue[i].sets = e.target.value
+
+    this.setState({
+      editing: {
+        ...this.state.editing,
+        value: currentValue
+      }
+    })
+  }
+
+  repsOnChange = (e, i) => {
+    if (e.target.value > 1000) return
+    const currentValue = this.state.editing.value
+
+    currentValue[i].reps = e.target.value
+
+    this.setState({
+      editing: {
+        ...this.state.editing,
+        value: currentValue
+      }
+    })
+  }
+
   saveDay = () => {
     const day = this.state.editing.type
     const value = this.state.editing.value
 
-    console.log('day', day)
-    console.log('new value', value)
     axios.post('/api/routine/day', { routineId: this.props.match.params.id, day, value })
       .then(res => {
-        console.log('res', res)
-        this.setState({ routine: res.data.routine })
+        this.setState({
+          editing: {
+            type: null,
+            value: null
+          },
+          routine: res.data.routine
+        })
       })
       .catch(err => {
         console.log('err', err)
@@ -299,8 +330,22 @@ class ViewRoutine extends Component {
                                           }
                                         </Select> : e.exercise}
                                     </TableCell>
-                                    <TableCell>{e.sets}</TableCell>
-                                    <TableCell>{e.reps}</TableCell>
+                                    <TableCell>
+                                      {type === day
+                                        ? <TextField
+                                          type='number'
+                                          value={value[i].sets}
+                                          onChange={(e) => this.setsOnChange(e, i)}
+                                        /> : e.sets}
+                                    </TableCell>
+                                    <TableCell>
+                                      {type === day
+                                        ? <TextField
+                                          type='number'
+                                          value={value[i].reps}
+                                          onChange={(e) => this.repsOnChange(e, i)}
+                                        /> : e.reps}
+                                    </TableCell>
                                   </TableRow>
                                 )
                               })
