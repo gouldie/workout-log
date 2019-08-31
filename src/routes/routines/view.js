@@ -8,7 +8,6 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import EditIcon from '@material-ui/icons/Edit'
 import SaveIcon from '@material-ui/icons/Save'
@@ -92,6 +91,24 @@ class ViewRoutine extends Component {
       })
   }
 
+  editDescription = () => {
+    this.setState({
+      editing: {
+        type: 'description',
+        value: this.state.routine.description
+      }
+    })
+  }
+
+  onChangeDescription = (e) => {
+    this.setState({
+      editing: {
+        type: 'description',
+        value: e.target.value
+      }
+    })
+  }
+
   cancel = () => {
     this.setState({
       editing: {
@@ -121,6 +138,7 @@ class ViewRoutine extends Component {
                       InputProps={{
                         style: { fontSize: '20px' }
                       }}
+                      placeholder='Name'
                     />
                     <SaveIcon
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
@@ -139,12 +157,45 @@ class ViewRoutine extends Component {
                       onClick={this.editName}
                     />
                   </div>
-
               }
 
             </div>
 
-            <p>{routine.description || 'No description'}</p>
+            <div className='flex align-items-center' style={{ marginBottom: '20px' }}>
+              {
+                type === 'description'
+                  ? <div className='flex align-items-center' style={{ height: '32px', width: '100%' }}>
+                    <TextField
+                      value={value}
+                      onChange={this.onChangeDescription}
+                      InputProps={{
+                        style: { fontSize: '16px' }
+                      }}
+                      placeholder='Description'
+                      multiline
+                      fullWidth
+                      rowsMax={3}
+                    />
+                    <SaveIcon
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      onClick={this.saveName}
+                    />
+                    <CloseIcon
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
+                      onClick={this.cancel}
+                    />
+                  </div>
+
+                  : <div className='flex align-items-center' style={{ height: '32px' }}>
+                    <p style={{ margin: 0 }}>{routine.description || 'No description'}</p>
+                    <EditIcon
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      onClick={this.editDescription}
+                    />
+                  </div>
+              }
+
+            </div>
             <div style={{ margin: '40px 0' }}>
               {
                 Object.keys(routine.days).map((day, i) => {
@@ -180,16 +231,6 @@ class ViewRoutine extends Component {
                 })
               }
             </div>
-            {/* <div className='flex justify-between' style={{ marginBottom: '50px' }}>
-              <p>{editing && 'Add new day +'}</p>
-              <Button
-                variant='contained'
-                color={editing ? 'secondary' : 'primary'}
-                style={{ color: '#fff' }}
-                onClick={() => console.log('ad')}>
-                {editing ? 'Save' : 'Edit'}
-              </Button>
-            </div> */}
           </div>
         }
 
