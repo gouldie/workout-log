@@ -109,6 +109,22 @@ class ViewRoutine extends Component {
     })
   }
 
+  saveDescription = () => {
+    axios.post('/api/routine/description', { routineId: this.props.match.params.id, description: this.state.editing.value })
+      .then(res => {
+        this.setState({
+          editing: {
+            type: null,
+            value: null
+          },
+          routine: res.data.routine
+        })
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
+  }
+
   cancel = () => {
     this.setState({
       editing: {
@@ -178,7 +194,7 @@ class ViewRoutine extends Component {
                     />
                     <SaveIcon
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
-                      onClick={this.saveName}
+                      onClick={this.saveDescription}
                     />
                     <CloseIcon
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}

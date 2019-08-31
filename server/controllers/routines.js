@@ -92,7 +92,7 @@ async function addExercise (req, res, next) {
   })
 }
 
-async function editName (req, res, next) {
+async function setName (req, res, next) {
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
@@ -104,6 +104,25 @@ async function editName (req, res, next) {
   const { routineId, name } = req.body
 
   const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { name }, { new: true })
+
+  return res.json({
+    success: true,
+    routine: newRoutine
+  })
+}
+
+async function setDescription (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
+  ensureSignedIn(req)
+
+  const { routineId, description } = req.body
+
+  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { description }, { new: true })
 
   return res.json({
     success: true,
@@ -134,10 +153,16 @@ function validate (method) {
         body('reps', 'Reps invalid').optional().isInt()
       ]
     }
-    case 'editName': {
+    case 'setName': {
       return [
         body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
         body('name', 'Name required').exists().isString().isLength({ max: 50 })
+      ]
+    }
+    case 'setDescription': {
+      return [
+        body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
+        body('description', 'Description required').exists().isString().isLength({ max: 500 })
       ]
     }
   }
@@ -149,5 +174,6 @@ module.exports = {
   getRoutines,
   addRoutine,
   addExercise,
-  editName
+  setName,
+  setDescription
 }
