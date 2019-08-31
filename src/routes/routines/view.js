@@ -12,6 +12,9 @@ import TextField from '@material-ui/core/TextField'
 import EditIcon from '@material-ui/icons/Edit'
 import SaveIcon from '@material-ui/icons/Save'
 import CloseIcon from '@material-ui/icons/Close'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import exercises from '../../assets/json/exercises.json'
 
 const days = {
   MON: 'Monday',
@@ -125,6 +128,44 @@ class ViewRoutine extends Component {
       })
   }
 
+  editDay = (day) => {
+    this.setState({
+      editing: {
+        type: day,
+        value: this.state.routine.days[day]
+      }
+    })
+  }
+
+  exerciseOnChange = (e, i) => {
+    const currentValue = this.state.editing.value
+
+    currentValue[i].exercise = e.target.value
+
+    this.setState({
+      editing: {
+        ...this.state.editing,
+        value: currentValue
+      }
+    })
+  }
+
+  saveDay = () => {
+    const day = this.state.editing.type
+    const value = this.state.editing.value
+
+    console.log('day', day)
+    console.log('new value', value)
+    axios.post('/api/routine/day', { routineId: this.props.match.params.id, day, value })
+      .then(res => {
+        console.log('res', res)
+        this.setState({ routine: res.data.routine })
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
+  }
+
   cancel = () => {
     this.setState({
       editing: {
@@ -217,7 +258,25 @@ class ViewRoutine extends Component {
                 Object.keys(routine.days).map((day, i) => {
                   return (
                     <div key={i}>
-                      <h2>{days[day]}</h2>
+                      <div className='flex'>
+                        <h2>{days[day]}</h2>
+                        {
+                          type === day ? <div>
+                            <SaveIcon
+                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                              onClick={this.saveDay}
+                            />
+                            <CloseIcon
+                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
+                              onClick={this.cancel}
+                            />
+                          </div>
+                            : <EditIcon
+                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                              onClick={() => this.editDay(day)}
+                            />
+                        }
+                      </div>
                       <Paper>
                         <Table style={{ marginBottom: '16px' }}>
                           <TableHead>
@@ -232,7 +291,14 @@ class ViewRoutine extends Component {
                               routine.days[day].map((e, i) => {
                                 return (
                                   <TableRow key={i}>
-                                    <TableCell>{e.exercise}</TableCell>
+                                    <TableCell>
+                                      {type === day
+                                        ? <Select value={value[i].exercise} onChange={(e) => this.exerciseOnChange(e, i)}>
+                                          {
+                                            exercises.map((e, i) => <MenuItem key={i} value={e.name}>{e.name}</MenuItem>)
+                                          }
+                                        </Select> : e.exercise}
+                                    </TableCell>
                                     <TableCell>{e.sets}</TableCell>
                                     <TableCell>{e.reps}</TableCell>
                                   </TableRow>

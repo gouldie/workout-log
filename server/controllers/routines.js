@@ -130,6 +130,25 @@ async function setDescription (req, res, next) {
   })
 }
 
+async function setDay (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
+  ensureSignedIn(req)
+
+  const { routineId, day, value } = req.body
+
+  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { [`days.${day}`]: value }, { new: true })
+
+  return res.json({
+    success: true,
+    routine: newRoutine
+  })
+}
+
 function validate (method) {
   switch (method) {
     case 'getRoutine': {
@@ -165,6 +184,13 @@ function validate (method) {
         body('description', 'Description required').exists().isString().isLength({ max: 500 })
       ]
     }
+    case 'setDay': {
+      return [
+        body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
+        body('day', 'Day required').exists().isIn(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']),
+        body('value', 'Value required').exists().isArray()
+      ]
+    }
   }
 }
 
@@ -175,5 +201,6 @@ module.exports = {
   addRoutine,
   addExercise,
   setName,
-  setDescription
+  setDescription,
+  setDay
 }
