@@ -178,6 +178,24 @@ class ViewRoutine extends Component {
     })
   }
 
+  deleteExercise = (i) => {
+    console.log('before', this.state.editing.value)
+    const newValue = this.state.editing.value.filter((v, i2) => {
+      console.log(i, i2)
+      return i !== i2
+    })
+    // currentValue.splice(i, 1)
+
+    console.log('test', newValue)
+
+    this.setState({
+      editing: {
+        ...this.state.editing,
+        value: newValue
+      }
+    })
+  }
+
   saveDay = () => {
     const day = this.state.editing.type
     const value = this.state.editing.value
@@ -287,6 +305,8 @@ class ViewRoutine extends Component {
             <div style={{ margin: '40px 0' }}>
               {
                 Object.keys(routine.days).map((day, i) => {
+                  const exerciseList = type === day ? this.state.editing.value : routine.days[day]
+
                   return (
                     <div key={i}>
                       <div className='flex'>
@@ -312,39 +332,52 @@ class ViewRoutine extends Component {
                         <Table style={{ marginBottom: '16px' }}>
                           <TableHead>
                             <TableRow>
-                              <TableCell width='70%'>Exercise</TableCell>
-                              <TableCell width='15%'>Sets</TableCell>
-                              <TableCell width='15%'>Reps</TableCell>
+                              <TableCell width='67%'>Exercise</TableCell>
+                              <TableCell width='14%'>Sets</TableCell>
+                              <TableCell width='14%'>Reps</TableCell>
+                              <TableCell width='5%'></TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
                             {
-                              routine.days[day].map((e, i) => {
+                              exerciseList.map((e, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>
                                       {type === day
-                                        ? <Select value={value[i].exercise} onChange={(e) => this.exerciseOnChange(e, i)}>
+                                        ? <Select value={value[i].exercise} onChange={(e) => this.exerciseOnChange(e, i)} style={{ fontSize: '14px' }}>
                                           {
-                                            exercises.map((e, i) => <MenuItem key={i} value={e.name}>{e.name}</MenuItem>)
+                                            exercises.map((e, i) => <MenuItem key={i} value={e.name} style={{ fontSize: '14px' }}>{e.name}</MenuItem>)
                                           }
-                                        </Select> : e.exercise}
+                                        </Select> : <p style={{ margin: 0 }}>{e.exercise}</p>}
                                     </TableCell>
                                     <TableCell>
                                       {type === day
                                         ? <TextField
                                           type='number'
+                                          InputProps={{
+                                            style: { fontSize: '14px' }
+                                          }}
                                           value={value[i].sets}
                                           onChange={(e) => this.setsOnChange(e, i)}
-                                        /> : e.sets}
+                                        /> : <p style={{ margin: 0 }}>{e.sets}</p>}
                                     </TableCell>
                                     <TableCell>
                                       {type === day
                                         ? <TextField
                                           type='number'
+                                          InputProps={{
+                                            style: { fontSize: '14px' }
+                                          }}
                                           value={value[i].reps}
                                           onChange={(e) => this.repsOnChange(e, i)}
-                                        /> : e.reps}
+                                        /> : <p style={{ margin: 0 }}>{e.reps}</p>}
+                                    </TableCell>
+                                    <TableCell>
+                                      <CloseIcon
+                                        style={{ color: 'red', cursor: 'pointer', marginLeft: '10px', fontSize: '22px', visibility: type === day ? 'visible' : 'hidden' }}
+                                        onClick={() => this.deleteExercise(i)}
+                                      />
                                     </TableCell>
                                   </TableRow>
                                 )
