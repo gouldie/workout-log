@@ -139,9 +139,9 @@ async function setDay (req, res, next) {
 
   ensureSignedIn(req)
 
-  const { routineId, day, value } = req.body
+  const { routineId, day, value, adding } = req.body
 
-  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { [`days.${day}`]: value.length > 0 ? value : undefined }, { new: true })
+  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { [`days.${day}`]: value.length > 0 || adding ? value : undefined }, { new: true })
 
   return res.json({
     success: true,
@@ -188,7 +188,8 @@ function validate (method) {
       return [
         body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
         body('day', 'Day required').exists().isIn(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']),
-        body('value', 'Value required').exists().isArray()
+        body('value', 'Value required').exists().isArray(),
+        body('adding', 'Adding invalid').optional().isBoolean()
       ]
     }
   }

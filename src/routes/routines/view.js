@@ -15,6 +15,12 @@ import CloseIcon from '@material-ui/icons/Close'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import exercises from '../../assets/json/exercises.json'
+import Button from '@material-ui/core/Button'
+import Popover from '@material-ui/core/Popover'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import Divider from '@material-ui/core/Divider'
+import ListItemText from '@material-ui/core/ListItemText'
 
 const days = {
   MON: 'Monday',
@@ -35,7 +41,8 @@ class ViewRoutine extends Component {
       editing: {
         type: null,
         value: null
-      }
+      },
+      popover: false
     }
   }
 
@@ -221,6 +228,27 @@ class ViewRoutine extends Component {
       })
   }
 
+  togglePopover = () => {
+    this.setState({ popover: !this.state.popover })
+  }
+
+  closePopover = () => {
+    this.setState({ popover: false })
+  }
+
+  addDay = (day) => {
+    axios.post('/api/routine/day', { routineId: this.props.match.params.id, day, value: [], adding: true })
+      .then(res => {
+        this.setState({
+          routine: res.data.routine,
+          popover: false
+        })
+      })
+      .catch(err => {
+        if (err) console.log('err', err)
+      })
+  }
+
   cancel = () => {
     this.setState({
       editing: {
@@ -231,15 +259,15 @@ class ViewRoutine extends Component {
   }
 
   render () {
-    const { routine, editing: { type, value } } = this.state
+    const { routine, editing: { type, value }, popover } = this.state
 
     return (
-      <Container className='flex column align-items-center'>
+      <Container className='flex column align-items-center' onClick={this.closePopover}>
         {routine === null && <Loader />}
         {routine === false && <h1>Routine not found</h1>}
         {
           routine &&
-          <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left' }}>
+          <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left', marginBottom: '50px' }}>
             <div className='flex align-items-center' style={{ marginBottom: '20px' }}>
               {
                 type === 'name'
@@ -401,6 +429,40 @@ class ViewRoutine extends Component {
                 })
               }
             </div>
+            <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
+              e.stopPropagation(); this.togglePopover()
+            }}>
+              Add new day
+            </Button>
+            <Popover
+              style={{ backgroundColor: 'rgb(0,0,0,0.5)' }}
+              open={popover}
+              anchorEl={document.getElementById('add-new-day-button')}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right'
+              }}
+            >
+              <div onClick={e => e.stopPropagation()} style={{ padding: '0', minWidth: '150px', maxWidth: '300px', border: '1px solid black', borderRadius: '4px' }}>
+                <List style={{ padding: 0 }}>
+                  {
+                    Object.keys(days).map(d => {
+                      if (!routine.days[d]) {
+                        return (
+                          <ListItem button style={{ padding: '5px 20px' }}>
+                            <ListItemText
+                              style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
+                              primary={d}
+                              onClick={() => this.addDay(d)}
+                            />
+                          </ListItem>
+                        )
+                      }
+                    })
+                  }
+                </List>
+              </div>
+            </Popover>
           </div>
         }
 
