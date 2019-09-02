@@ -132,7 +132,7 @@ class ViewRoutine extends Component {
     this.setState({
       editing: {
         type: day,
-        value: this.state.routine.days[day]
+        value: this.state.routine.days[day].map(e => e)
       }
     })
   }
@@ -393,7 +393,7 @@ class ViewRoutine extends Component {
                         </Table>
                       </Paper>
                       {type === day &&
-                        <p style={{ marginLeft: '4px' }} onClick={this.addExercise}>Add new +</p>
+                        <p style={{ marginLeft: '4px', cursor: 'pointer' }} onClick={this.addExercise}>Add new exercise +</p>
                       }
                     </div>
                   )
