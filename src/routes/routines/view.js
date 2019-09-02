@@ -179,19 +179,25 @@ class ViewRoutine extends Component {
   }
 
   deleteExercise = (i) => {
-    console.log('before', this.state.editing.value)
-    const newValue = this.state.editing.value.filter((v, i2) => {
-      console.log(i, i2)
-      return i !== i2
-    })
-    // currentValue.splice(i, 1)
-
-    console.log('test', newValue)
+    const newValue = this.state.editing.value.filter((v, i2) => i !== i2)
 
     this.setState({
       editing: {
         ...this.state.editing,
         value: newValue
+      }
+    })
+  }
+
+  addExercise = () => {
+    const currentValue = this.state.editing.value
+
+    currentValue.push({ exercise: 'Barbell Curl', sets: 3, reps: 10 })
+
+    this.setState({
+      editing: {
+        ...this.state.editing,
+        value: currentValue
       }
     })
   }
@@ -308,7 +314,7 @@ class ViewRoutine extends Component {
                   const exerciseList = type === day ? this.state.editing.value : routine.days[day]
 
                   return (
-                    <div key={i}>
+                    <div key={i} style={{ marginBottom: '40px' }}>
                       <div className='flex'>
                         <h2>{days[day]}</h2>
                         {
@@ -386,6 +392,9 @@ class ViewRoutine extends Component {
                           </TableBody>
                         </Table>
                       </Paper>
+                      {type === day &&
+                        <p style={{ marginLeft: '4px' }} onClick={this.addExercise}>Add new +</p>
+                      }
                     </div>
                   )
                 })
