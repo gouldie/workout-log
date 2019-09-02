@@ -312,6 +312,7 @@ class ViewRoutine extends Component {
               {
                 Object.keys(routine.days).map((day, i) => {
                   const exerciseList = type === day ? this.state.editing.value : routine.days[day]
+                  if (!exerciseList) return null
 
                   return (
                     <div key={i} style={{ marginBottom: '40px' }}>

@@ -141,7 +141,7 @@ async function setDay (req, res, next) {
 
   const { routineId, day, value } = req.body
 
-  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { [`days.${day}`]: value }, { new: true })
+  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { [`days.${day}`]: value.length > 0 ? value : undefined }, { new: true })
 
   return res.json({
     success: true,
