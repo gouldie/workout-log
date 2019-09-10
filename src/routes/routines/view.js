@@ -446,10 +446,10 @@ class ViewRoutine extends Component {
               <div onClick={e => e.stopPropagation()} style={{ padding: '0', minWidth: '150px', maxWidth: '300px', border: '1px solid black', borderRadius: '4px' }}>
                 <List style={{ padding: 0 }}>
                   {
-                    Object.keys(days).map(d => {
+                    Object.keys(days).map((d, i) => {
                       if (!routine.days[d]) {
                         return (
-                          <ListItem button style={{ padding: '5px 20px' }}>
+                          <ListItem key={i} button style={{ padding: '5px 20px' }}>
                             <ListItemText
                               style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
                               primary={d}

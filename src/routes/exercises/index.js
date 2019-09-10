@@ -123,19 +123,20 @@ class Exercises extends Component {
     axios.post('/api/routine/exercise', { exercise, routineId, day })
       .then(res => {
         this.closePopover()
-        this.openSnackbar('Exercise added')
+        this.openSnackbar('Exercise added.', 'success')
       })
       .catch(err => {
         console.log('err', err)
-        this.openSnackbar('An error occurred. Please try again, or contact us.')
+        this.openSnackbar('An error occurred. Please try again, or contact us.', 'error')
       })
   }
 
-  openSnackbar = (message) => {
+  openSnackbar = (message, variant) => {
     this.setState({
       snackbar: {
         open: true,
-        message
+        message,
+        variant
       }
     })
   }
@@ -175,7 +176,12 @@ class Exercises extends Component {
 
     return (
       <Container id='exercises-container' maxWidth='md' className='flex justify-center' onClick={this.closePopover}>
-        <Snackbar open={snackbar.open} message={snackbar.message} onClose={this.closeSnackbar} />
+        <Snackbar
+          open={snackbar.open}
+          message={snackbar.message}
+          onClose={this.closeSnackbar}
+          variant={snackbar.variant}
+        />
         <div style={{ width: '20px' }}></div>
         <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
@@ -258,6 +264,7 @@ class Exercises extends Component {
                 data={{ ...e }}
                 onClick={this.iconOnClick}
                 isAuthenticated={isAuthenticated}
+                openSnackbar={this.openSnackbar}
               />
             ))
           }

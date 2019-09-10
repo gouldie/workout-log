@@ -20,7 +20,7 @@ export default class SideMenu extends Component {
     super()
 
     this.state = {
-      routinesExpand: false
+      routinesExpand: true
     }
   }
 
