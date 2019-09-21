@@ -4,7 +4,8 @@ const RoutineSchema = new mongoose.Schema({
   userId: mongoose.Types.ObjectId,
   name: String,
   description: String,
-  days: Object
+  days: Object,
+  private: Boolean
 }, { versionKey: false })
 
 RoutineSchema.statics.findByStringId = function (id) {

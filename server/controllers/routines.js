@@ -149,6 +149,23 @@ async function setDay (req, res, next) {
   })
 }
 
+async function setPrivate (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
+  const { routineId, isPrivate } = req.body
+
+  const newRoutine = await Routine.findOneAndUpdate({ userId: req.user._id, _id: routineId }, { private: isPrivate }, { new: true })
+
+  return res.json({
+    success: true,
+    routine: newRoutine
+  })
+}
+
 function validate (method) {
   switch (method) {
     case 'getRoutine': {
@@ -192,6 +209,12 @@ function validate (method) {
         body('adding', 'Adding invalid').optional().isBoolean()
       ]
     }
+    case 'setPrivate': {
+      return [
+        body('routineId', 'Routine ID required').exists().isString().isLength({ max: 50 }),
+        body('isPrivate', 'Private required').exists().isBoolean()
+      ]
+    }
   }
 }
 
@@ -203,5 +226,6 @@ module.exports = {
   addExercise,
   setName,
   setDescription,
-  setDay
+  setDay,
+  setPrivate
 }

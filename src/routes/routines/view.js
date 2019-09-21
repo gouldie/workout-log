@@ -19,8 +19,8 @@ import Button from '@material-ui/core/Button'
 import Popover from '@material-ui/core/Popover'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
+import Checkbox from '@material-ui/core/Checkbox'
 
 const days = {
   MON: 'Monday',
@@ -258,6 +258,18 @@ class ViewRoutine extends Component {
     })
   }
 
+  setPrivate = (e) => {
+    axios.post('/api/routine/private', { routineId: this.props.match.params.id, isPrivate: e.target.checked })
+      .then(res => {
+        this.setState({
+          routine: res.data.routine
+        })
+      })
+      .catch(err => {
+        if (err) console.log('err', err)
+      })
+  }
+
   render () {
     const { routine, editing: { type, value }, popover } = this.state
 
@@ -434,6 +446,18 @@ class ViewRoutine extends Component {
             }}>
               Add new day
             </Button>
+            <div className='flex align-items-center' style={{ marginTop: '20px' }}>
+              <p style={{ margin: 0 }}>Private:</p>
+              <Checkbox
+                checked={routine.private || false}
+                onChange={this.setPrivate}
+                // value='asd'
+                color="primary"
+                inputProps={{
+                  'aria-label': 'secondary checkbox'
+                }}
+              />
+            </div>
             <Popover
               style={{ backgroundColor: 'rgb(0,0,0,0.5)' }}
               open={popover}
