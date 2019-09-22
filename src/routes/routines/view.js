@@ -441,11 +441,12 @@ class ViewRoutine extends Component {
                 })
               }
             </div>
-            <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
-              e.stopPropagation(); this.togglePopover()
+            {Object.values(routine.days).filter(e => e).length < 7 && <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
+              e.stopPropagation()
+              this.togglePopover()
             }}>
               Add new day
-            </Button>
+            </Button>}
             <div className='flex align-items-center' style={{ marginTop: '20px' }}>
               <p style={{ margin: 0 }}>Private:</p>
               <Checkbox
