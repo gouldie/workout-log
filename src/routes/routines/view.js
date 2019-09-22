@@ -42,7 +42,8 @@ class ViewRoutine extends Component {
         type: null,
         value: null
       },
-      popover: false
+      popover: false,
+      error: null
     }
   }
 
@@ -59,11 +60,20 @@ class ViewRoutine extends Component {
       }
     })
       .then(res => {
-        this.setState({ routine: res.data.routine })
+        if (!res.data.success) {
+          this.setState({
+            error: res.data.message
+          })
+        } else {
+          this.setState({ routine: res.data.routine })
+        }
       })
       .catch(err => {
         console.log('e', err)
-        this.setState({ routine: false })
+        this.setState({
+          routine: false,
+          error: 'Routine not found'
+        })
       })
   }
 
@@ -271,12 +281,12 @@ class ViewRoutine extends Component {
   }
 
   render () {
-    const { routine, editing: { type, value }, popover } = this.state
+    const { routine, editing: { type, value }, popover, error } = this.state
 
     return (
       <Container className='flex column align-items-center' onClick={this.closePopover}>
-        {routine === null && <Loader />}
-        {routine === false && <h1>Routine not found</h1>}
+        {routine === null && !error && <Loader />}
+        {error && <h1>{error}</h1>}
         {
           routine &&
           <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left', marginBottom: '50px' }}>

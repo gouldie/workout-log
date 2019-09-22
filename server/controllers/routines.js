@@ -25,9 +25,27 @@ async function getRoutine (req, res, next) {
 
   const { routineId } = req.query
 
+  const routine = await Routine.findByStringId(routineId)
+
+  if (!routine) {
+    return res.json({
+      success: false,
+      message: 'Routine not found'
+    })
+  }
+
+  const unauthorized = routine.private && (!routine.userId.equals(req.user._id))
+
+  if (unauthorized) {
+    return res.json({
+      success: false,
+      message: 'Routine is private'
+    })
+  }
+
   return res.json({
     success: true,
-    routine: await Routine.findByStringId(routineId)
+    routine: routine
   })
 }
 
