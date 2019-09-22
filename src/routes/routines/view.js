@@ -21,6 +21,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Checkbox from '@material-ui/core/Checkbox'
+import { Link } from 'react-router-dom'
 
 const days = {
   MON: 'Monday',
@@ -286,7 +287,10 @@ class ViewRoutine extends Component {
     return (
       <Container className='flex column align-items-center' onClick={this.closePopover}>
         {routine === null && !error && <Loader />}
-        {error && <h1>{error}</h1>}
+        {error && <div style={{ textAlign: 'center' }}>
+          <h1 style={{ marginBottom: '16px' }}>{error}</h1>
+          <p>Go back to the <Link to='/routines'>routine list</Link>.</p>
+        </div>}
         {
           routine &&
           <div style={{ width: '100%', maxWidth: '800px', textAlign: 'left', marginBottom: '50px' }}>
