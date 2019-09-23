@@ -1,17 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import Container from '@material-ui/core/Container'
+import { Container, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Select, ListItemText, Checkbox } from '@material-ui/core'
 import Routine from '../../components/routines/routine'
 import { SearchBar } from '../../components/core'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-import ListItemText from '@material-ui/core/ListItemText'
-import Checkbox from '@material-ui/core/Checkbox'
 
 const filterList = {
   days: {

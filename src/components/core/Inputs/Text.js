@@ -1,7 +1,6 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import CloseIcon from '@material-ui/icons/Close'
+import { InputAdornment, TextField } from '@material-ui/core'
+import { Close } from '@material-ui/icons'
 
 export const SearchBar = ({ onChange, value, onClear }) => (
   <TextField
@@ -9,7 +8,7 @@ export const SearchBar = ({ onChange, value, onClear }) => (
     InputProps={{
       endAdornment: (
         <InputAdornment position="start">
-          <CloseIcon style={{ color: 'gray', cursor: 'pointer' }} onClick={onClear} />
+          <Close style={{ color: 'gray', cursor: 'pointer' }} onClick={onClear} />
         </InputAdornment>
       )
     }}

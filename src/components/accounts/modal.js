@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import { DialogTitle, DialogContentText, DialogContent, DialogActions, Dialog, TextField, Button } from '@material-ui/core'
 import axios from 'axios'
 
 const labels = {
@@ -65,7 +59,7 @@ export default class AccountsModal extends Component {
   }
 
   render () {
-    const { email, password, error, submitting } = this.state
+    const { email, password, error } = this.state
     const { open, onClose, type } = this.props
 
     return (

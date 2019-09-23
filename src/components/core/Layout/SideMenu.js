@@ -1,19 +1,11 @@
 import React, { Component } from 'react'
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import Dumbbell from '../../../assets/images/dumbbell.png'
 import LibraryBooks from '../../../assets/images/library-books.png'
 import Home from '../../../assets/images/home.png'
 import Settings from '../../../assets/images/account-settings.png'
 import { Link } from 'react-router-dom'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import Collapse from '@material-ui/core/Collapse'
-import StarBorder from '@material-ui/icons/StarBorder'
+import { ExpandLess, ExpandMore, StarBorder } from '@material-ui/icons'
+import { Collapse, ListItemText, ListItemIcon, ListItem, Divider, List, Drawer } from '@material-ui/core'
 
 export default class SideMenu extends Component {
   constructor () {

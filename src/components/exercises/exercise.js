@@ -1,5 +1,5 @@
 import React from 'react'
-import Paper from '@material-ui/core/Paper'
+import { Paper } from '@material-ui/core'
 
 export default ({ data, onClick, isAuthenticated, openSnackbar }) => {
   return (

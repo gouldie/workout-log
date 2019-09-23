@@ -1,26 +1,9 @@
 import React, { Component } from 'react'
-import Container from '@material-ui/core/Container'
+import { Container, Table, TableBody, TableCell, TableHead, TableRow, Paper, TextField, MenuItem, Select, Button, Popover, List, ListItem, ListItemText, Checkbox } from '@material-ui/core'
 import axios from 'axios'
 import { Loader } from '../../components/core'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
-import EditIcon from '@material-ui/icons/Edit'
-import SaveIcon from '@material-ui/icons/Save'
-import CloseIcon from '@material-ui/icons/Close'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
+import { Edit, Save, Close } from '@material-ui/icons'
 import exercises from '../../assets/json/exercises.json'
-import Button from '@material-ui/core/Button'
-import Popover from '@material-ui/core/Popover'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Checkbox from '@material-ui/core/Checkbox'
 import { Link } from 'react-router-dom'
 
 const days = {
@@ -306,11 +289,11 @@ class ViewRoutine extends Component {
                       }}
                       placeholder='Name'
                     />
-                    <SaveIcon
+                    <Save
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                       onClick={this.saveName}
                     />
-                    <CloseIcon
+                    <Close
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
                       onClick={this.cancel}
                     />
@@ -318,7 +301,7 @@ class ViewRoutine extends Component {
 
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
                     <h2 style={{ margin: 0 }}>{routine.name}</h2>
-                    <EditIcon
+                    <Edit
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                       onClick={this.editName}
                     />
@@ -342,11 +325,11 @@ class ViewRoutine extends Component {
                       fullWidth
                       rowsMax={3}
                     />
-                    <SaveIcon
+                    <Save
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                       onClick={this.saveDescription}
                     />
-                    <CloseIcon
+                    <Close
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
                       onClick={this.cancel}
                     />
@@ -354,7 +337,7 @@ class ViewRoutine extends Component {
 
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
                     <p style={{ margin: 0 }}>{routine.description || 'No description'}</p>
-                    <EditIcon
+                    <Edit
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                       onClick={this.editDescription}
                     />
@@ -374,16 +357,16 @@ class ViewRoutine extends Component {
                         <h2>{days[day]}</h2>
                         {
                           type === day ? <div>
-                            <SaveIcon
+                            <Save
                               style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                               onClick={this.saveDay}
                             />
-                            <CloseIcon
+                            <Close
                               style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
                               onClick={this.cancel}
                             />
                           </div>
-                            : <EditIcon
+                            : <Edit
                               style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                               onClick={() => this.editDay(day)}
                             />
@@ -435,7 +418,7 @@ class ViewRoutine extends Component {
                                         /> : <p style={{ margin: 0 }}>{e.reps}</p>}
                                     </TableCell>
                                     <TableCell>
-                                      <CloseIcon
+                                      <Close
                                         style={{ color: 'red', cursor: 'pointer', marginLeft: '10px', fontSize: '22px', visibility: type === day ? 'visible' : 'hidden' }}
                                         onClick={() => this.deleteExercise(i)}
                                       />

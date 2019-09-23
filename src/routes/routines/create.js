@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { SubmitButton } from '../../components/core'
-import Container from '@material-ui/core/Container'
-import FormControl from '@material-ui/core/FormControl'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import { Container, FormControl, Input, InputLabel, Grid, Button } from '@material-ui/core'
 import axios from 'axios'
 import { connect } from 'react-redux'
 

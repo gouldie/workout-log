@@ -1,7 +1,6 @@
 import React from 'react'
-import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import { Snackbar, IconButton } from '@material-ui/core'
+import { Close } from '@material-ui/icons'
 
 export default ({ open, message, onClose }) => (
   <Snackbar
@@ -21,7 +20,7 @@ export default ({ open, message, onClose }) => (
         style={{ padding: '10px' }}
         onClick={onClose}
       >
-        <CloseIcon />
+        <Close />
       </IconButton>
     }
   />

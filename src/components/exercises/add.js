@@ -1,10 +1,5 @@
 import React from 'react'
-import Popover from '@material-ui/core/Popover'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
-import Collapse from '@material-ui/core/Collapse'
-import ListItemText from '@material-ui/core/ListItemText'
+import { Popover, List, ListItem, Divider, Collapse, ListItemText } from '@material-ui/core'
 
 export default ({ popover, routines, expand, addToRoutine, toggleExpand }) => (
   <Popover
