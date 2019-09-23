@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const RoutineSchema = new mongoose.Schema({
   userId: mongoose.Types.ObjectId,
   name: String,
-  description: String,
+  desc: String,
   days: Object,
   private: Boolean
 }, { versionKey: false })

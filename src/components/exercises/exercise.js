@@ -19,7 +19,7 @@ export default ({ data, onClick, isAuthenticated, openSnackbar }) => {
             if (isAuthenticated) {
               onClick(e, 'add', data, document.getElementById(data.name))
             } else {
-              openSnackbar('You need to be logged in to do that.', 'info')
+              openSnackbar('You need to be signed in to do that.', 'info')
             }
           }}
         >

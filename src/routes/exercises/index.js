@@ -183,7 +183,7 @@ class Exercises extends Component {
           variant={snackbar.variant}
         />
         <div style={{ width: '20px' }}></div>
-        <div className='filter-container'>
+        {filteredExercises && <div className='filter-container'>
           <div style={{ marginBottom: '10px' }}>
             <SearchBar
               value={search}
@@ -247,7 +247,7 @@ class Exercises extends Component {
               })
             }
           </div>
-        </div>
+        </div>}
         <div style={{ width: '20px' }}></div>
         <div className='exercise-container flex column align-items-center' style={{ }}>
           <AddToRoutine
@@ -269,7 +269,7 @@ class Exercises extends Component {
             ))
           }
         </div>
-
+        <div style={{ width: '20px' }}></div>
       </Container>
     )
   }
