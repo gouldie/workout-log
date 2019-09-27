@@ -89,17 +89,13 @@ class Routines extends Component {
       let filtersMatch = true
 
       Object.keys(filters).forEach(k => {
-        filters[k].forEach(p => {
-          if (k === 'days') {
-            if (Object.keys(e.days).length !== p) {
-              filtersMatch = false
-            }
-          } else {
-            if (!e[k].includes(p)) {
-              filtersMatch = false
-            }
-          }
-        })
+        let daysMatch = true
+
+        if (k === 'days') {
+          if (filters[k].length > 0 && !filters[k].includes(Object.keys(e.days).length)) daysMatch = false
+        }
+
+        filtersMatch = daysMatch
       })
 
       if (!filtersMatch) return false
@@ -108,11 +104,11 @@ class Routines extends Component {
     })
 
     return (
-      <Container id='routines-container' maxWidth='md'>
+      <Container maxWidth='md'>
         {
           !isAuthenticated
             ? <p style={{ textAlign: 'center' }}>You need to be signed in to view your routines.</p>
-            : <div className='flex justify-center'>
+            : <div id='routines-container' className='flex justify-center'>
               <div style={{ width: '20px' }}></div>
               <div className='filter-container'>
                 <div style={{ marginBottom: '10px' }}>

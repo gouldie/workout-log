@@ -6,7 +6,8 @@ const { validationResult } = require('express-validator')
 async function getRoutines (req, res) {
   ensureSignedIn(req)
 
-  const routines = await Routine.find({ userId: req.user._id })
+  // Find routines that are either owned by the user, or not private
+  const routines = await Routine.find({ $or: [{ isPrivate: { $in: [null, false] } }, { userId: req.user._id }] })
 
   return res.json({
     success: true,
