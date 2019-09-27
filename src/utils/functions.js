@@ -1,4 +1,7 @@
 export function arrayMove (arr, oldIndex, newIndex) {
+  if (newIndex === -1) return
+  if (newIndex >= arr.length) return
+
   while (oldIndex < 0) {
     oldIndex += arr.length
   }
