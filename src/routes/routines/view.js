@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Container, Table, TableBody, TableCell, TableHead, TableRow, Paper, TextField, MenuItem, Select, Button, Popover, List, ListItem, ListItemText, Checkbox } from '@material-ui/core'
 import axios from 'axios'
 import { Loader } from '../../components/core'
-import { Edit, Save, Close } from '@material-ui/icons'
+import { Edit, Save, Close, KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons'
 import exercises from '../../assets/json/exercises.json'
 import { Link } from 'react-router-dom'
+import { arrayMove } from '../../utils/functions'
 
 const days = {
   MON: 'Monday',
@@ -264,6 +265,19 @@ class ViewRoutine extends Component {
       })
   }
 
+  reorderExercise = (day, pos, direction) => {
+    const newDay = this.state.editing.value
+
+    arrayMove(newDay, pos, direction === 'up' ? pos - 1 : pos + 1)
+
+    this.setState({
+      editing: {
+        ...this.state.editing,
+        value: newDay
+      }
+    })
+  }
+
   render () {
     const { routine, editing: { type, value }, popover, error } = this.state
 
@@ -418,10 +432,22 @@ class ViewRoutine extends Component {
                                         /> : <p style={{ margin: 0 }}>{e.reps}</p>}
                                     </TableCell>
                                     <TableCell>
-                                      <Close
-                                        style={{ color: 'red', cursor: 'pointer', marginLeft: '10px', fontSize: '22px', visibility: type === day ? 'visible' : 'hidden' }}
-                                        onClick={() => this.deleteExercise(i)}
-                                      />
+                                      <div className='flex align-items-center'>
+                                        <div style={{ visibility: type === day ? 'visible' : 'hidden', position: 'relative', top: '3px' }}>
+                                          <KeyboardArrowUp
+                                            style={{ fontSize: '20px', cursor: 'pointer' }}
+                                            onClick={() => this.reorderExercise(day, i, 'up')}
+                                          />
+                                          <KeyboardArrowDown
+                                            style={{ fontSize: '20px', cursor: 'pointer' }}
+                                            onClick={() => this.reorderExercise(day, i, 'down')}
+                                          />
+                                        </div>
+                                        <Close
+                                          style={{ color: 'red', cursor: 'pointer', marginLeft: '10px', fontSize: '22px', visibility: type === day ? 'visible' : 'hidden' }}
+                                          onClick={() => this.deleteExercise(i)}
+                                        />
+                                      </div>
                                     </TableCell>
                                   </TableRow>
                                 )
@@ -449,7 +475,6 @@ class ViewRoutine extends Component {
               <Checkbox
                 checked={routine.private || false}
                 onChange={this.setPrivate}
-                // value='asd'
                 color="primary"
                 inputProps={{
                   'aria-label': 'secondary checkbox'
