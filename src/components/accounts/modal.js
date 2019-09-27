@@ -64,7 +64,7 @@ export default class AccountsModal extends Component {
 
     return (
       <Dialog id='accounts-dialog' open={open} onClose={() => onClose()} aria-labelledby="accounts-dialog-title" style={{ maxHeight: '100%' }}>
-        <div className='accounts-modal'>
+        <form className='accounts-modal'>
           <DialogTitle id="accounts-dialog-title" style={{ padding: 0, margin: '0 0 10px' }}>{labels[type].title}</DialogTitle>
           <DialogContent style={{ padding: 0, margin: '10px 0', minHeight: '100px' }}>
             <TextField
@@ -90,7 +90,7 @@ export default class AccountsModal extends Component {
             <Button onClick={() => onClose()} color="primary">
             Cancel
             </Button>
-            <Button onClick={this.submit} color="primary">
+            <Button type='submit' onClick={this.submit} color="primary">
               {labels[type].submitButton}
             </Button>
           </DialogActions>
@@ -100,7 +100,7 @@ export default class AccountsModal extends Component {
             {error}
           </DialogContentText>
           }
-        </div>
+        </form>
       </Dialog>
     )
   }
