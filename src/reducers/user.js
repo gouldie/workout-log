@@ -1,8 +1,8 @@
 import * as types from '../actions/types'
 
 const initialState = {
-  user: [],
-  dummy: ''
+  id: null,
+  isAuthenticated: false
 }
 
 export default function (state = initialState, action = {}) {
@@ -11,6 +11,12 @@ export default function (state = initialState, action = {}) {
       return {
         ...state,
         isAuthenticated: action.isAuthenticated
+      }
+    }
+    case types.USER_ID: {
+      return {
+        ...state,
+        id: action.id
       }
     }
     default: {

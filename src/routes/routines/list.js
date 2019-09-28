@@ -17,8 +17,9 @@ class Routines extends Component {
     super()
 
     this.state = {
-      search: '',
       routines: false,
+      search: '',
+      own: false,
       filters: {
         days: []
       }
@@ -41,6 +42,10 @@ class Routines extends Component {
 
   clearSearchBar = () => {
     this.setState({ search: '' })
+  }
+
+  ownOnCheck = () => {
+    this.setState({ own: !this.state.own })
   }
 
   filterOnCheck = (type, option) => {
@@ -68,8 +73,8 @@ class Routines extends Component {
   }
 
   render () {
-    const { isAuthenticated } = this.props
-    const { routines, search, filters } = this.state
+    const { isAuthenticated, userId } = this.props
+    const { routines, search, filters, own } = this.state
 
     const daysPerWeek = []
     routines && routines.forEach(e => {
@@ -82,6 +87,8 @@ class Routines extends Component {
     filterList.days.options = daysPerWeek
 
     const filteredRoutines = routines && routines.filter(e => {
+      if (own && e.userId !== userId) return false
+
       const searchMatch = e.name.toLowerCase().includes(search.toLowerCase())
 
       if (!searchMatch) return false
@@ -103,6 +110,8 @@ class Routines extends Component {
       return true
     })
 
+    console.log(filters['days'])
+
     return (
       <Container maxWidth='md'>
         {
@@ -119,6 +128,21 @@ class Routines extends Component {
                   />
                 </div>
                 <div className='filter-list'>
+                  <div style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          name='own'
+                          value={own}
+                          color='primary'
+                          style={{ padding: '5px 9px' }}
+                          onChange={this.ownOnCheck}
+                          checked={own}
+                        />
+                      }
+                      label='Only show my routines'
+                    />
+                  </div>
                   {
                     Object.keys(filterList).map((f, i) => {
                       return (
@@ -126,10 +150,10 @@ class Routines extends Component {
                           <div id='select-filters'>
                             <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
                             <FormControl style={{ width: '100%' }}>
-                              <InputLabel htmlFor="select-multiple">Name</InputLabel>
                               <Select
                                 multiple
                                 value={filters[f]}
+                                renderValue={selected => selected.join(', ')}
                                 onChange={(e) => this.filterOnCheck(f, e.target.value)}
                                 input={<Input id="select-multiple" />}
                                 MenuProps={{ PaperProps: { style: { width: '250px' } } }}
@@ -189,5 +213,6 @@ class Routines extends Component {
 }
 
 export default connect(state => ({
-  isAuthenticated: state.user.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated,
+  userId: state.user.id
 }))(Routines)

@@ -7,7 +7,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import Routes from './routes'
 import createStore from './store'
-import { isAuthenticated } from './actions/user'
+import { isAuthenticated, setId } from './actions/user'
 
 import './sass/index.scss'
 import { green } from '@material-ui/core/colors'
@@ -24,7 +24,10 @@ const store = createStore()
 
 axios.get('/api/user')
   .then(res => {
-    store.dispatch(isAuthenticated(!!res.data.user))
+    if (res.data.user) {
+      store.dispatch(isAuthenticated(true))
+      store.dispatch(setId(res.data.user._id))
+    }
 
     ReactDOM.render(
       <MuiThemeProvider theme={theme}>
