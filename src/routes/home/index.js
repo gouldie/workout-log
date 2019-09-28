@@ -7,11 +7,11 @@ class Home extends Component {
     const { isAuthenticated } = this.props
 
     return (
-      <div className='link-list'>
+      <div className='flex column link-list'>
         {!isAuthenticated && <p style={{ marginBottom: '30px' }}>Log in or register to access the full functionality of WKLog.</p>}
-        <Link to='/exercises'>
-          View the list of exercises
-        </Link>
+        <Link to='/exercises'>View exercises</Link>
+        <Link to='/routines'>View routines</Link>
+        {isAuthenticated && <Link to='/routine/create'>Create a routine</Link>}
       </div>
     )
   }
