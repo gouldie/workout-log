@@ -110,8 +110,6 @@ class Routines extends Component {
       return true
     })
 
-    console.log(filters['days'])
-
     return (
       <Container maxWidth='md'>
         {
@@ -128,7 +126,7 @@ class Routines extends Component {
                   />
                 </div>
                 <div className='filter-list'>
-                  <div style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
+                  <div className='flex' style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -152,8 +150,15 @@ class Routines extends Component {
                             <FormControl style={{ width: '100%' }}>
                               <Select
                                 multiple
+                                displayEmpty
                                 value={filters[f]}
-                                renderValue={selected => selected.join(', ')}
+                                renderValue={selected => {
+                                  if (selected.length === 0) {
+                                    return <em>Select</em>
+                                  }
+
+                                  return selected.join(', ')
+                                }}
                                 onChange={(e) => this.filterOnCheck(f, e.target.value)}
                                 input={<Input id="select-multiple" />}
                                 MenuProps={{ PaperProps: { style: { width: '250px' } } }}
