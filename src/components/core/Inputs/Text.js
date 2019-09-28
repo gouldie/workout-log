@@ -14,6 +14,6 @@ export const SearchBar = ({ onChange, value, onClear }) => (
     }}
     value={value}
     onChange={onChange}
-    placeholder='Search'
+    placeholder='Search by name'
   />
 )

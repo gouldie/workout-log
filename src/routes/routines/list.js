@@ -163,7 +163,7 @@ class Routines extends Component {
                                 input={<Input id="select-multiple" />}
                                 MenuProps={{ PaperProps: { style: { width: '250px' } } }}
                               >
-                                {filterList[f].options.map((m, i) => (
+                                {filterList[f].options.sort((a, b) => a - b).map((m, i) => (
                                   <MenuItem key={m} value={m}>
                                     <Checkbox color='primary' checked={filters[f].indexOf(m) > -1} />
                                     <ListItemText primary={m} />
