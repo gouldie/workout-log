@@ -25,8 +25,8 @@ class Exercises extends Component {
     this.state = {
       search: '',
       filters: {
-        muscles: [],
-        equipment: []
+        muscles: filterList.muscles.options.map(e => e),
+        equipment: filterList.equipment.options.map(e => e)
       },
       popover: {
         anchor: null,
@@ -151,17 +151,17 @@ class Exercises extends Component {
 
       if (!searchMatch) return false
 
-      let filtersMatch = true
+      const filtersMatch = []
 
       Object.keys(filters).forEach(k => {
-        filters[k].forEach(p => {
-          if (!e[k].includes(p)) {
-            filtersMatch = false
+        e[k].forEach(e => {
+          if (filters[k].includes(e)) {
+            if (!filtersMatch.includes(k)) filtersMatch.push(k)
           }
         })
       })
 
-      if (!filtersMatch) return false
+      if (filtersMatch.length < Object.keys(filters).length) return false
 
       return true
     })
@@ -191,7 +191,7 @@ class Exercises extends Component {
                     <div id='select-filters'>
                       <p style={{ marginBottom: '10px' }}>{filterList[f].label}</p>
                       <FormControl style={{ width: '100%' }}>
-                        <InputLabel htmlFor="select-multiple">Name</InputLabel>
+                        {/* <InputLabel htmlFor="select-multiple">Name</InputLabel> */}
                         <Select
                           multiple
                           value={filters[f]}

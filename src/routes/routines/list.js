@@ -21,7 +21,7 @@ class Routines extends Component {
       search: '',
       own: false,
       filters: {
-        days: []
+        days: [0, 1, 2, 3, 4, 5, 6, 7]
       }
     }
   }
@@ -53,7 +53,7 @@ class Routines extends Component {
       this.setState({
         filters: {
           ...this.state.filters,
-          [type]: option
+          [type]: option.sort((a, b) => a - b)
         }
       })
       return
@@ -99,7 +99,7 @@ class Routines extends Component {
         let daysMatch = true
 
         if (k === 'days') {
-          if (filters[k].length > 0 && !filters[k].includes(Object.keys(e.days).length)) daysMatch = false
+          if (!filters[k].includes(Object.keys(e.days).length)) daysMatch = false
         }
 
         filtersMatch = daysMatch
