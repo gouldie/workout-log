@@ -55,7 +55,7 @@ class CreateRoutine extends Component {
 
     axios.post('/api/routine', { name, desc, days })
       .then(res => {
-        window.location.href = '/routines'
+        window.location.href = `/routine/${res.data.routine._id}`
       })
       .catch(res => {
         this.setState({ submitting: false, error: 'An internal error occurred' })

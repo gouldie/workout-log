@@ -329,11 +329,11 @@ class ViewRoutine extends Component {
                       placeholder='Name'
                     />
                     <Save
-                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.saveName}
                     />
                     <Close
-                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.cancel}
                     />
                   </div>
@@ -341,7 +341,7 @@ class ViewRoutine extends Component {
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
                     <h2 style={{ margin: 0 }}>{routine.name}</h2>
                     {isOwnRoutine && <Edit
-                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.editName}
                     />}
                   </div>
@@ -365,11 +365,11 @@ class ViewRoutine extends Component {
                       rowsMax={3}
                     />
                     <Save
-                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.saveDescription}
                     />
                     <Close
-                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.cancel}
                     />
                   </div>
@@ -377,7 +377,7 @@ class ViewRoutine extends Component {
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
                     <p style={{ margin: 0 }}>{routine.description || 'No description'}</p>
                     {isOwnRoutine && <Edit
-                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                      style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.editDescription}
                     />}
                   </div>
@@ -397,16 +397,16 @@ class ViewRoutine extends Component {
                         {
                           type === day ? <div>
                             <Save
-                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                               onClick={this.saveDay}
                             />
                             <Close
-                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '22px' }}
+                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                               onClick={this.cancel}
                             />
                           </div>
                             : isOwnRoutine && <Edit
-                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
+                              style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                               onClick={() => this.editDay(day)}
                             />
                         }
@@ -521,11 +521,10 @@ class ViewRoutine extends Component {
                     Object.keys(days).map((d, i) => {
                       if (!routine.days[d]) {
                         return (
-                          <ListItem key={i} button style={{ padding: '5px 20px' }}>
+                          <ListItem key={i} button style={{ padding: '5px 20px' }} onClick={() => this.addDay(d)}>
                             <ListItemText
                               style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
                               primary={d}
-                              onClick={() => this.addDay(d)}
                             />
                           </ListItem>
                         )

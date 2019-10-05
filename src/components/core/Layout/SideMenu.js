@@ -75,9 +75,9 @@ export default class SideMenu extends Component {
                 </ListItem>
               </Link>
             </List>
-            {isAuthenticated && <Divider />}
+            {false && <Divider />}
             {
-              isAuthenticated &&
+              false &&
               <ListItem button key='settings'>
                 <ListItemIcon><img src={Settings} style={{ width: '24px' }} /></ListItemIcon>
                 <ListItemText primary='Settings' />

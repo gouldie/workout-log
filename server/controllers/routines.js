@@ -72,10 +72,11 @@ async function addRoutine (req, res, next) {
     days[d] = []
   })
 
-  await Routine.create({ userId: req.user._id, name: req.body.name, desc: req.body.desc, days })
+  const routine = await Routine.create({ userId: req.user._id, name: req.body.name, desc: req.body.desc, days })
 
   return res.json({
-    success: true
+    success: true,
+    routine
   })
 }
 
