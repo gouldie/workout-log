@@ -6,6 +6,7 @@ import { Edit, Save, Close, KeyboardArrowUp, KeyboardArrowDown } from '@material
 import exercises from '../../assets/json/exercises.json'
 import { Link } from 'react-router-dom'
 import { arrayMove } from '../../utils/functions'
+import { connect } from 'react-redux'
 
 const days = {
   MON: 'Monday',
@@ -93,6 +94,12 @@ class ViewRoutine extends Component {
       })
       .catch(err => {
         console.log('err', err)
+        this.setState({
+          editing: {
+            type: null,
+            value: null
+          }
+        })
       })
   }
 
@@ -127,6 +134,12 @@ class ViewRoutine extends Component {
       })
       .catch(err => {
         console.log('err', err)
+        this.setState({
+          editing: {
+            type: null,
+            value: null
+          }
+        })
       })
   }
 
@@ -220,6 +233,12 @@ class ViewRoutine extends Component {
       })
       .catch(err => {
         console.log('err', err)
+        this.setState({
+          editing: {
+            type: null,
+            value: null
+          }
+        })
       })
   }
 
@@ -241,6 +260,9 @@ class ViewRoutine extends Component {
       })
       .catch(err => {
         if (err) console.log('err', err)
+        this.setState({
+          popover: false
+        })
       })
   }
 
@@ -280,6 +302,9 @@ class ViewRoutine extends Component {
 
   render () {
     const { routine, editing: { type, value }, popover, error } = this.state
+    const { userId } = this.props
+
+    const isOwnRoutine = routine && (userId === routine.userId)
 
     return (
       <Container className='flex column align-items-center' onClick={this.closePopover}>
@@ -315,10 +340,10 @@ class ViewRoutine extends Component {
 
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
                     <h2 style={{ margin: 0 }}>{routine.name}</h2>
-                    <Edit
+                    {isOwnRoutine && <Edit
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                       onClick={this.editName}
-                    />
+                    />}
                   </div>
               }
 
@@ -351,10 +376,10 @@ class ViewRoutine extends Component {
 
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
                     <p style={{ margin: 0 }}>{routine.description || 'No description'}</p>
-                    <Edit
+                    {isOwnRoutine && <Edit
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                       onClick={this.editDescription}
-                    />
+                    />}
                   </div>
               }
 
@@ -380,7 +405,7 @@ class ViewRoutine extends Component {
                               onClick={this.cancel}
                             />
                           </div>
-                            : <Edit
+                            : isOwnRoutine && <Edit
                               style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '18px' }}
                               onClick={() => this.editDay(day)}
                             />
@@ -464,13 +489,13 @@ class ViewRoutine extends Component {
                 })
               }
             </div>
-            {Object.values(routine.days).filter(e => e).length < 7 && <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
+            {isOwnRoutine && Object.values(routine.days).filter(e => e).length < 7 && <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
               e.stopPropagation()
               this.togglePopover()
             }}>
               Add new day
             </Button>}
-            <div className='flex align-items-center' style={{ marginTop: '20px' }}>
+            {isOwnRoutine && <div className='flex align-items-center' style={{ marginTop: '20px' }}>
               <p style={{ margin: 0 }}>Private:</p>
               <Checkbox
                 checked={routine.private || false}
@@ -480,7 +505,7 @@ class ViewRoutine extends Component {
                   'aria-label': 'secondary checkbox'
                 }}
               />
-            </div>
+            </div>}
             <Popover
               style={{ backgroundColor: 'rgb(0,0,0,0.5)' }}
               open={popover}
@@ -518,4 +543,6 @@ class ViewRoutine extends Component {
   }
 }
 
-export default ViewRoutine
+export default connect(state => ({
+  userId: state.user.id
+}))(ViewRoutine)

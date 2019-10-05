@@ -51,19 +51,19 @@ export default class SideMenu extends Component {
               <Collapse in={routinesExpand} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <Link className='undecorated' to='/routine/create'>
-                    <ListItem button style={{ paddingLeft: '30px' }}>
+                    <ListItem button style={{ paddingLeft: '30px' }} onClick={toggleDrawer(false)}>
                       <ListItemIcon>
                         <StarBorder />
                       </ListItemIcon>
-                      <ListItemText primary="Create" onClick={toggleDrawer(false)} />
+                      <ListItemText primary="Create" />
                     </ListItem>
                   </Link>
                   <Link className='undecorated' to='/routines'>
-                    <ListItem button style={{ paddingLeft: '30px' }}>
+                    <ListItem button style={{ paddingLeft: '30px' }} onClick={toggleDrawer(false)}>
                       <ListItemIcon>
                         <StarBorder />
                       </ListItemIcon>
-                      <ListItemText primary="List" onClick={toggleDrawer(false)} />
+                      <ListItemText primary="List" />
                     </ListItem>
                   </Link>
                 </List>

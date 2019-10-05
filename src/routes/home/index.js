@@ -9,9 +9,9 @@ class Home extends Component {
     return (
       <div className='flex column link-list'>
         {!isAuthenticated && <p style={{ marginBottom: '30px' }}>Log in or register to access the full functionality of WKLog.</p>}
-        <Link to='/exercises'>View exercises</Link>
-        <Link to='/routines'>View routines</Link>
-        {isAuthenticated && <Link to='/routine/create'>Create a routine</Link>}
+        <div style={{ marginBottom: '20px' }}><Link to='/exercises'>View exercises</Link></div>
+        <div style={{ marginBottom: '20px' }}><Link to='/routines'>View routines</Link></div>
+        {isAuthenticated && <div><Link to='/routine/create'>Create a routine</Link></div>}
       </div>
     )
   }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { Container, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Select, ListItemText, Checkbox } from '@material-ui/core'
 import Routine from '../../components/routines/routine'
-import { SearchBar } from '../../components/core'
+import { SearchBar, Loader } from '../../components/core'
 
 const filterList = {
   days: {
@@ -113,8 +113,8 @@ class Routines extends Component {
     return (
       <Container maxWidth='md'>
         {
-          !isAuthenticated
-            ? <p style={{ textAlign: 'center' }}>You need to be signed in to view your routines.</p>
+          routines === false
+            ? <Loader />
             : <div id='routines-container' className='flex justify-center'>
               <div style={{ width: '20px' }}></div>
               <div className='filter-container'>
@@ -126,7 +126,7 @@ class Routines extends Component {
                   />
                 </div>
                 <div className='filter-list'>
-                  <div className='flex' style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
+                  {isAuthenticated && <div className='flex' style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', margin: '10px 0' }}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -140,7 +140,7 @@ class Routines extends Component {
                       }
                       label='Only show my routines'
                     />
-                  </div>
+                  </div>}
                   {
                     Object.keys(filterList).map((f, i) => {
                       return (

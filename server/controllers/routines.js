@@ -4,10 +4,18 @@ const { body, query } = require('express-validator')
 const { validationResult } = require('express-validator')
 
 async function getRoutines (req, res) {
-  ensureSignedIn(req)
+  // ensureSignedIn(req)
+
+  const query = [
+    { private: { $in: [null, false] } }
+  ]
+
+  if (req.isAuthenticated()) {
+    query.push({ userId: req.user._id })
+  }
 
   // Find routines that are either owned by the user, or not private
-  const routines = await Routine.find({ $or: [{ isPrivate: { $in: [null, false] } }, { userId: req.user._id }] })
+  const routines = await Routine.find({ $or: query })
 
   return res.json({
     success: true,
@@ -22,7 +30,7 @@ async function getRoutine (req, res, next) {
     return next({ message: errors.array()[0].msg })
   }
 
-  ensureSignedIn(req)
+  // ensureSignedIn(req)
 
   const { routineId } = req.query
 
@@ -35,7 +43,7 @@ async function getRoutine (req, res, next) {
     })
   }
 
-  const unauthorized = routine.private && (!routine.userId.equals(req.user._id))
+  const unauthorized = routine.private && (!req.user || !routine.userId.equals(req.user._id))
 
   if (unauthorized) {
     return res.json({
