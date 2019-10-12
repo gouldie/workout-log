@@ -48,7 +48,7 @@ export default class AccountsModal extends Component {
 
     axios.post(labels[type].submitRoute, { email, password })
       .then(res => {
-        this.setState({ submitting: false })
+        // this.setState({ submitting: false })
         window.location.reload()
       })
       .catch(err => {
@@ -59,7 +59,7 @@ export default class AccountsModal extends Component {
   }
 
   render () {
-    const { email, password, error } = this.state
+    const { email, password, error, submitting } = this.state
     const { open, onClose, type } = this.props
 
     return (
@@ -91,7 +91,7 @@ export default class AccountsModal extends Component {
             Cancel
             </Button>
             <Button type='submit' onClick={this.submit} color="primary">
-              {labels[type].submitButton}
+              {submitting ? 'Submitting..' : labels[type].submitButton}
             </Button>
           </DialogActions>
           {
