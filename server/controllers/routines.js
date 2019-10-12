@@ -194,6 +194,24 @@ async function setPrivate (req, res, next) {
   })
 }
 
+async function deleteRoutine (req, res, next) {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return next({ message: errors.array()[0].msg })
+  }
+
+  ensureSignedIn(req)
+
+  const { id } = req.body
+
+  await Routine.deleteOne({ userId: req.user._id, _id: id })
+
+  return res.json({
+    success: true
+  })
+}
+
 function validate (method) {
   switch (method) {
     case 'getRoutine': {
@@ -243,6 +261,11 @@ function validate (method) {
         body('isPrivate', 'Private required').exists().isBoolean()
       ]
     }
+    case 'deleteRoutine': {
+      return [
+        body('id', 'Routine ID required').exists().isString().isLength({ max: 50 })
+      ]
+    }
   }
 }
 
@@ -255,5 +278,6 @@ module.exports = {
   setName,
   setDescription,
   setDay,
-  setPrivate
+  setPrivate,
+  deleteRoutine
 }

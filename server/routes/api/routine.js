@@ -11,4 +11,5 @@ module.exports = (app) => {
   app.post('/api/routine/description', RoutineController.validate('setDescription'), RoutineController.setDescription)
   app.post('/api/routine/day', RoutineController.validate('setDay'), RoutineController.setDay)
   app.post('/api/routine/private', RoutineController.validate('setPrivate'), RoutineController.setPrivate)
+  app.delete('/api/routine', RoutineController.validate('deleteRoutine'), RoutineController.deleteRoutine)
 }

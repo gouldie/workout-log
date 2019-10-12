@@ -29,7 +29,8 @@ class ViewRoutine extends Component {
         value: null
       },
       popover: false,
-      error: null
+      error: null,
+      deleting: false
     }
   }
 
@@ -300,8 +301,21 @@ class ViewRoutine extends Component {
     })
   }
 
+  deleteRoutine = () => {
+    this.setState({ deleting: true })
+
+    axios.delete('/api/routine', {
+      data: {
+        id: this.state.routine._id
+      }
+    })
+      .then(res => {
+        window.location.href = '/routines'
+      })
+  }
+
   render () {
-    const { routine, editing: { type, value }, popover, error } = this.state
+    const { routine, editing: { type, value }, popover, error, deleting } = this.state
     const { userId } = this.props
 
     const isOwnRoutine = routine && (userId === routine.userId)
@@ -489,12 +503,20 @@ class ViewRoutine extends Component {
                 })
               }
             </div>
-            {isOwnRoutine && Object.values(routine.days).filter(e => e).length < 7 && <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
-              e.stopPropagation()
-              this.togglePopover()
-            }}>
-              Add new day
-            </Button>}
+            {isOwnRoutine && Object.values(routine.days).filter(e => e).length < 7 &&
+              <div className='flex justify-between'>
+                <Button id='add-new-day-button' variant='contained' color='primary' onClick={(e) => {
+                  e.stopPropagation()
+                  this.togglePopover()
+                }}>
+                Add new day
+                </Button>
+                <Button variant='contained' style={{ backgroundColor: 'red', color: '#fff' }} onClick={this.deleteRoutine}>
+                  {deleting ? 'DELETING..' : 'DELETE ROUTINE'}
+                </Button>
+              </div>
+            }
+
             {isOwnRoutine && <div className='flex align-items-center' style={{ marginTop: '20px' }}>
               <p style={{ margin: 0 }}>Private:</p>
               <Checkbox
