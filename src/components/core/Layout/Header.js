@@ -6,7 +6,12 @@ import { Menu } from '@material-ui/icons'
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    paddingBottom: '50px'
+    [theme.breakpoints.up('md')]: {
+      paddingBottom: '50px'
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: '30px'
+    }
   },
   menuButton: {
     marginRight: theme.spacing(2)

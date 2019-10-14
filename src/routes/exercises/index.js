@@ -48,7 +48,7 @@ class Exercises extends Component {
   getRoutines = () => {
     axios.get('/api/routines')
       .then(res => {
-        this.setState({ routines: res.data.routines })
+        this.setState({ routines: res.data.routines.filter(r => r.userId === this.props.userId) })
       })
   }
 
@@ -119,7 +119,7 @@ class Exercises extends Component {
       })
       .catch(err => {
         console.log('err', err)
-        this.openSnackbar('An error occurred. Please try again, or contact us.', 'error')
+        this.openSnackbar('An error occurred. Please try again.', 'error')
       })
   }
 
@@ -268,5 +268,6 @@ class Exercises extends Component {
 }
 
 export default connect(state => ({
-  isAuthenticated: state.user.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated,
+  userId: state.user.id
 }))(Exercises)

@@ -91,7 +91,7 @@ async function addExercise (req, res, next) {
 
   const { exercise, routineId, day, sets = 3, reps = 10 } = req.body
 
-  const routine = await Routine.findOne({ _id: routineId })
+  const routine = await Routine.findOne({ _id: routineId, userId: req.user._id })
 
   if (!routine) {
     return next({ message: 'Routine not found' })
