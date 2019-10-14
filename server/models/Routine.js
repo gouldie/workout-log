@@ -6,7 +6,7 @@ const RoutineSchema = new mongoose.Schema({
   desc: String,
   days: Object,
   private: Boolean
-}, { versionKey: false })
+}, { versionKey: false, timestamps: true })
 
 RoutineSchema.statics.findByStringId = function (id) {
   return this.findById({ _id: mongoose.Types.ObjectId(id) })
