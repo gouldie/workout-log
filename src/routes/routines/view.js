@@ -389,7 +389,7 @@ class ViewRoutine extends Component {
                   </div>
 
                   : <div className='flex align-items-center' style={{ height: '32px' }}>
-                    <p style={{ margin: 0 }}>{routine.desc || 'No description'}</p>
+                    <p style={{ margin: 0, lineHeight: '20px' }}>{routine.desc || 'No description'}</p>
                     {isOwnRoutine && <Edit
                       style={{ color: 'black', cursor: 'pointer', marginLeft: '10px', fontSize: '14px' }}
                       onClick={this.editDescription}

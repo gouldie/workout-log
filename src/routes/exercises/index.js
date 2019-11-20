@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 const filterList = {
   muscles: {
     label: 'Muscles worked',
-    options: ['Biceps', 'Triceps', 'Chest', 'Legs']
+    options: ['Biceps', 'Triceps', 'Chest', 'Legs', 'Back']
   },
   equipment: {
     label: 'Equipment required',

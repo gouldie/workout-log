@@ -22,5 +22,11 @@
     "muscles": ["Legs"],
     "equipment": ["Barbell"],
     "img": "http://workoutlabs.com/wp-content/uploads/watermarked/Barbell-Squat.png"
+  },
+  {
+    "name": "Deadlift",
+    "muscles": ["Legs", "Back"],
+    "equipment": ["Barbell"],
+    "img": "https://cdn-xi3mbccdkztvoept8hl.netdna-ssl.com/wp-content/uploads/watermarked/Barbell_Deadlift_M_WorkoutLabs.png"
   }
 ]
