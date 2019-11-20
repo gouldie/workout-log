@@ -8,6 +8,10 @@ tbody td {
   padding-bottom: 5px !important;
 }
 
+th:nth-of-type(2), td:nth-of-type(2), th:nth-of-type(3), td:nth-of-type(3) {
+  text-align: center;
+}
+
 @media (max-width: 800px) {
   #routines-container {
     flex-direction: column;
