@@ -13,7 +13,7 @@ console.log('Running in prod:', IN_PROD)
 
 // Use native promises
 mongoose.Promise = global.Promise
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true }).then(() => {
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true }).then(() => {
   console.log('Connected to database')
 }, err => {
   console.log('err', err)
@@ -47,6 +47,10 @@ app.use(passport.session())
 // API routes
 app.get('/api', (req, res) => res.json({ status: 'up' })) // sanity check
 require('./routes')(app)
+
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname, '../dist', 'index.html'))
+})
 
 app.set('port', port)
 
