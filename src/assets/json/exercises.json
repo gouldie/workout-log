@@ -16,5 +16,11 @@
     "muscles": ["Triceps"],
     "equipment": ["Cables"],
     "img": "https://cdn-xi3mbccdkztvoept8hl.netdna-ssl.com/wp-content/uploads/watermarked/Triceps_Pushdown.png"
+  },
+  {
+    "name": "Squat",
+    "muscles": ["Legs"],
+    "equipment": ["Barbell"],
+    "img": "http://workoutlabs.com/wp-content/uploads/watermarked/Barbell-Squat.png"
   }
 ]
