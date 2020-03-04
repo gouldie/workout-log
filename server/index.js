@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useFindAndMod
 
 // Setup express
 const app = express()
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/', express.static(path.join(__dirname, '..', 'dist')))
@@ -29,13 +30,16 @@ if (IN_PROD) {
   app.use(helmet())
 }
 
+app.set('trust proxy', 1)
+
 // Configure session & passport
 app.use(
   session({
     secret: process.env.APP_SECRET || '123',
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    proxy: true,
     cookie: {
       secure: IN_PROD
     }
